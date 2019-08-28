@@ -1,0 +1,26 @@
+.Expense {
+  position: fixed;
+  background-color: white;
+  width: 60%;
+  height: 30%;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  padding: 16px;
+  margin: 40px;
+}
+div {
+  align-content: center;
+  color: red;
+  align-items: baseline;
+}
+form {
+  display: inline-block;
+  color: red;
+
+  margin-top: 2em;
+}
+
+input {
+  display: inline-flexbox;
+  margin: 5px;
+}
