@@ -1,26 +1,29 @@
 .Expense {
-  position: fixed;
+  position: relative;
   background-color: white;
-  width: 60%;
+  width: 80%;
   height: 30%;
   border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px black;
-  padding: 16px;
-  margin: 40px;
+  box-shadow: 1px 1px 1px #ccc;
+  padding: 30px;
+  margin: 20px;
+  align-content: center;
 }
-div {
+
+/* div {
   align-content: center;
   color: red;
   align-items: baseline;
-}
-form {
+} */
+
+/* form {
   display: inline-block;
   color: red;
 
   margin-top: 2em;
-}
+} */
 
-input {
+/* input {
   display: inline-flexbox;
   margin: 5px;
-}
+} */
