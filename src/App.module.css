@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+}
+
+div {
+  align-content: center;
+  color: red;
+  align-items: baseline;
+}
+form {
+  display: inline-block;
+  color: red;
+
+  margin-top: 2em;
+}
+
+input {
+  color: red;
+  display: inline-flexbox;
+  margin: 5px;
+}
