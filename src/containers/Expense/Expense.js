@@ -17,10 +17,19 @@ class Expense extends Component {
 
   clickHandler = () => {
     console.log(this.state.elements);
-    let expense = this.state.elements;
-    axios.post("/api/HouseCost/InsertSell", expense).then(response => {
+    const expense = this.state.elements;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: expense
+    };
+
+    axios.post("/api/HouseCost/InsertSell", config).then(response => {
       console.log("response: ", response).catch(error => {
         console.log("error:", error);
+        p;
       });
     });
   };
