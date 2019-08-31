@@ -19,6 +19,11 @@ class Expense extends Component {
     console.log(this.state.elements);
     const expense = this.state.elements;
     const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Origin: "http://192.168.1.105:3000"
+      },
       data: expense
     };
 

@@ -6,7 +6,7 @@ import Expense from "./containers/Expense/Expense";
 class App extends Component {
   render() {
     return (
-      <div className={classes}>
+      <div className={classes.Expense}>
         <Expense />
         {/* <SignIn /> */}
       </div>
