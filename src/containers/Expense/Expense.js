@@ -15,23 +15,21 @@ class Expense extends Component {
     }
   };
 
-  clickHandler = () => {
+  clickHandlgiter = () => {
     console.log(this.state.elements);
     const expense = this.state.elements;
     const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
       data: expense
     };
 
-    axios.post("/api/HouseCost/InsertSell", config).then(response => {
-      console.log("response: ", response).catch(error => {
+    axios
+      .post("/api/HouseCost/InsertSell", config)
+      .then(response => {
+        console.log("response: ", response);
+      })
+      .catch(error => {
         console.log("error:", error);
-        p;
       });
-    });
   };
 
   changeHandler = event => {
