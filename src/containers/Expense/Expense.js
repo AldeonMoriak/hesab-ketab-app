@@ -15,26 +15,22 @@ class Expense extends Component {
     }
   };
 
-  clickHandlgiter = () => {
+  clickHandler = () => {
     console.log(this.state.elements);
     const expense = this.state.elements;
     const config = {
+      method: "get, post, options",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
-        Origin: "http://192.168.1.105:3000"
-      },
-      data: expense
+        Accept: "application/json"
+      }
+      // data: expense
     };
 
     axios
-      .post("/api/HouseCost/InsertSell", config)
-      .then(response => {
-        console.log("response: ", response);
-      })
-      .catch(error => {
-        console.log("error:", error);
-      });
+      .post("/api/HouseCost/InsertSell", expense, config)
+      .then(response => console.log("response: ", response.data))
+      .catch(error => console.log("error:", error));
   };
 
   changeHandler = event => {
@@ -76,7 +72,11 @@ class Expense extends Component {
             <option value="2">اشکان</option>
             <option value="3">مهران</option>
           </select>
-          <Button variant="contained" onClick={this.clickHandler} />
+          <Button
+            size="large"
+            variant="contained"
+            onClick={this.clickHandler}
+          />
         </form>
       </div>
     );
