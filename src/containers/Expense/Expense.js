@@ -21,7 +21,8 @@ class Expense extends Component {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        Accept: "application/json",
+        Origin: "http://192.168.1.150:3000"
       },
       data: expense
     };
@@ -29,7 +30,6 @@ class Expense extends Component {
     axios.post("/api/HouseCost/InsertSell", config).then(response => {
       console.log("response: ", response).catch(error => {
         console.log("error:", error);
-        p;
       });
     });
   };
