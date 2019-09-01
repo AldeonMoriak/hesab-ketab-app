@@ -8,3 +8,6 @@ const instance = axios.create({
 // instance.defaults.headers.post["Vary"] = "Origin";
 
 export default instance;
+
+// http://192.168.200.215:86
+// http://192.168.1.151:75

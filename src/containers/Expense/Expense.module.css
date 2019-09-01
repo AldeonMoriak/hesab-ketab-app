@@ -7,7 +7,12 @@
   box-shadow: 1px 1px 1px #ccc;
   padding: 30px;
   margin: 20px;
-  align-content: center;
+  align-content: left;
+}
+
+.Select,
+.Input {
+  margin: 5px;
 }
 
 /* div {

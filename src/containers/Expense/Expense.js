@@ -21,7 +21,7 @@ class Expense extends Component {
   names = ["Ashkan", "Amin", "Mehran"];
 
   clickHandler = () => {
-    console.log(this.state.elements);
+    // console.log(this.state.elements);
     const expense = this.state.elements;
     const config = {
       method: "get, post, options",
@@ -31,6 +31,11 @@ class Expense extends Component {
       }
       // data: expense
     };
+
+    // axios
+    //   .get("/api/test", expense)
+    //   .then(response => console.log(response.data))
+    //   .catch(error => console.log(error));
 
     axios
       .post("/api/HouseCost/InsertSell", expense, config)
@@ -56,6 +61,7 @@ class Expense extends Component {
         <form name="expense" action="post">
           Spender:
           <Select
+            className={classes.Select}
             value={this.state.elements.Spender}
             name="Spender"
             onChange={this.changeHandler}
@@ -63,13 +69,29 @@ class Expense extends Component {
             {items}
           </Select>
           Stuff:{" "}
-          <Input name="StuffName" type="text" onChange={this.changeHandler} />
+          <Input
+            className={classes.Input}
+            name="StuffName"
+            type="text"
+            onChange={this.changeHandler}
+          />
           Price:{" "}
-          <Input name="Price" type="number" onChange={this.changeHandler} />
+          <Input
+            className={classes.Input}
+            name="Price"
+            type="number"
+            onChange={this.changeHandler}
+          />
           Description:{" "}
-          <Input name="Description" type="text" onChange={this.changeHandler} />
+          <Input
+            className={classes.Input}
+            name="Description"
+            type="text"
+            onChange={this.changeHandler}
+          />
           Participants:{" "}
           <Select
+            className={classes.Select}
             value={this.state.elements.Participant}
             name="Participant"
             multiple
