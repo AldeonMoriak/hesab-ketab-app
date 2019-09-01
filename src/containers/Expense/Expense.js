@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import classes from "./Expense.module.css";
 import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Input from "@material-ui/core/Input";
 import axios from "../../axios-exp";
 
 class Expense extends Component {
   state = {
     elements: {
       ID: 0,
-      SpenderId: 1,
+      Spender: "",
       Price: 0,
       StuffName: "",
       Description: "",
-      type: 0
+      Participant: []
     }
   };
+
+  names = ["Ashkan", "Amin", "Mehran"];
 
   clickHandler = () => {
     console.log(this.state.elements);
@@ -36,47 +41,45 @@ class Expense extends Component {
   changeHandler = event => {
     const element = event.target.name;
     const updatedState = { ...this.state.elements };
-    // if (element === "type") {
-    //   updatedState[element].push(event.target.value);
-    // } else {
     updatedState[element] = event.target.value;
-    // }
     this.setState({ elements: updatedState });
   };
 
   render() {
+    const items = this.names.map(name => (
+      <MenuItem key={name} value={name}>
+        {name}
+      </MenuItem>
+    ));
     return (
       <div className={classes.Expense}>
         <form name="expense" action="post">
-          Spender:{" "}
-          <select form="expense" name="SpenderId" onChange={this.changeHandler}>
-            <option value="1">امین</option>
-            <option value="2">اشکان</option>
-            <option value="3">مهران</option>
-          </select>
-          Stuff:{" "}
-          <input name="StuffName" type="text" onChange={this.changeHandler} />
-          Price:{" "}
-          <input name="Price" type="number" onChange={this.changeHandler} />
-          Description:{" "}
-          <input name="Description" type="text" onChange={this.changeHandler} />
-          Participants:{" "}
-          <select
-            form="expense"
-            name="type"
-            multiple
-            size="3"
+          Spender:
+          <Select
+            value={this.state.elements.Spender}
+            name="Spender"
             onChange={this.changeHandler}
           >
-            <option value="1">امین</option>
-            <option value="2">اشکان</option>
-            <option value="3">مهران</option>
-          </select>
-          <Button
-            size="large"
-            variant="contained"
-            onClick={this.clickHandler}
-          />
+            {items}
+          </Select>
+          Stuff:{" "}
+          <Input name="StuffName" type="text" onChange={this.changeHandler} />
+          Price:{" "}
+          <Input name="Price" type="number" onChange={this.changeHandler} />
+          Description:{" "}
+          <Input name="Description" type="text" onChange={this.changeHandler} />
+          Participants:{" "}
+          <Select
+            value={this.state.elements.Participant}
+            name="Participant"
+            multiple
+            onChange={this.changeHandler}
+          >
+            {items}
+          </Select>
+          <Button size="small" variant="contained" onClick={this.clickHandler}>
+            ok
+          </Button>
         </form>
       </div>
     );
