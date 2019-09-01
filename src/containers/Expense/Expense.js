@@ -9,38 +9,91 @@ import axios from "../../axios-exp";
 class Expense extends Component {
   state = {
     elements: {
-      ID: 0,
-      Spender: "",
+      SpenderId: "",
       Price: 0,
       StuffName: "",
       Description: "",
-      Participant: []
+      Type: []
     }
   };
 
-  names = ["Ashkan", "Amin", "Mehran"];
+  names = ["Askan", "Amin", "Mehiran"];
+  url = "";
+  toGet = () => {
+    let url = "?";
+    const updatedState = this.typeGenerator();
+    console.log("The final state is like this: ", updatedState);
+    let updatedStateArr = [];
+    // eslint-disable-next-line
+    for (let element in updatedState) {
+      updatedStateArr.push(element);
+    }
+    // eslint-disable-next-line
+    for (let element in updatedState) {
+      url = url.concat(`${element}=${updatedState[element]}`);
+      if (updatedStateArr.length - 1 !== updatedStateArr.indexOf(element)) {
+        url = url.concat("&");
+      }
+    }
+    this.url = url;
+  };
+
+  typeGenerator = () => {
+    let updatedState = { ...this.state.elements };
+    switch (this.state.elements.Type.join(" ").length) {
+      case 18:
+        updatedState.Type = 1;
+        break;
+      case 12:
+        updatedState.Type = 2;
+        break;
+      case 10:
+        updatedState.Type = 3;
+        break;
+      case 13:
+        updatedState.Type = 4;
+        break;
+      case 4:
+        updatedState.Type = 5;
+        break;
+      case 5:
+        updatedState.Type = 6;
+        break;
+      case 7:
+        updatedState.Type = 7;
+        break;
+      default:
+        updatedState.Type = "Error Occurrd";
+    }
+    switch (this.state.elements.SpenderId.length) {
+      case 4:
+        updatedState.SpenderId = 1;
+        break;
+      case 5:
+        updatedState.SpenderId = 2;
+        break;
+      case 7:
+        updatedState.SpenderId = 3;
+        break;
+      default:
+        updatedState.SpenderId = "Error Occurred!";
+    }
+    return updatedState;
+  };
 
   clickHandler = () => {
     // console.log(this.state.elements);
-    const expense = this.state.elements;
-    const config = {
-      method: "get, post, options",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-      // data: expense
-    };
+    // const expense = this.state.elements;
+    this.toGet();
+    axios
+      .get(`/api/HouseCost/InsertSell${this.url}`)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
 
     // axios
-    //   .get("/api/test", expense)
-    //   .then(response => console.log(response.data))
-    //   .catch(error => console.log(error));
-
-    axios
-      .post("/api/HouseCost/InsertSell", expense, config)
-      .then(response => console.log("response: ", response.data))
-      .catch(error => console.log("error:", error));
+    //   .post("/api/HouseCost/InsertSell", expense, config)
+    //   .then(response => console.log("response: ", response.data))
+    //   .catch(error => console.log("error:", error));
   };
 
   changeHandler = event => {
@@ -62,8 +115,8 @@ class Expense extends Component {
           Spender:
           <Select
             className={classes.Select}
-            value={this.state.elements.Spender}
-            name="Spender"
+            value={this.state.elements.SpenderId}
+            name="SpenderId"
             onChange={this.changeHandler}
           >
             {items}
@@ -92,8 +145,8 @@ class Expense extends Component {
           Participants:{" "}
           <Select
             className={classes.Select}
-            value={this.state.elements.Participant}
-            name="Participant"
+            value={this.state.elements.Type}
+            name="Type"
             multiple
             onChange={this.changeHandler}
           >

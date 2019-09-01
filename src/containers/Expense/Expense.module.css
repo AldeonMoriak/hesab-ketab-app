@@ -7,9 +7,11 @@
   box-shadow: 1px 1px 1px #ccc;
   padding: 30px;
   margin: 20px;
-  align-content: left;
+  align-content: center;
 }
-
+* {
+  justify-content: center;
+}
 .Select,
 .Input {
   margin: 5px;
