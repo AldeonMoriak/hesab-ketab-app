@@ -19,10 +19,11 @@ class Expense extends Component {
 
   names = ["Askan", "Amin", "Mehiran"];
   url = "";
+  // returning the needed url
   toGet = () => {
     let url = "?";
+    // using typeGenerator version of state
     const updatedState = this.typeGenerator();
-    console.log("The final state is like this: ", updatedState);
     let updatedStateArr = [];
     // eslint-disable-next-line
     for (let element in updatedState) {
@@ -38,6 +39,7 @@ class Expense extends Component {
     this.url = url;
   };
 
+  // returning the updated state where type and spenderId are of int to send to the backend
   typeGenerator = () => {
     let updatedState = { ...this.state.elements };
     switch (this.state.elements.Type.join(" ").length) {
@@ -81,9 +83,8 @@ class Expense extends Component {
     return updatedState;
   };
 
+  // sending the url to the server
   clickHandler = () => {
-    // console.log(this.state.elements);
-    // const expense = this.state.elements;
     this.toGet();
     axios
       .get(`/api/HouseCost/InsertSell${this.url}`)
@@ -96,6 +97,7 @@ class Expense extends Component {
     //   .catch(error => console.log("error:", error));
   };
 
+  // to handle the changes made to the fields
   changeHandler = event => {
     const element = event.target.name;
     const updatedState = { ...this.state.elements };
@@ -104,11 +106,13 @@ class Expense extends Component {
   };
 
   render() {
+    // seperating the code from select in order to use it elsewhere
     const items = this.names.map(name => (
       <MenuItem key={name} value={name}>
         {name}
       </MenuItem>
     ));
+
     return (
       <div className={classes.Expense}>
         <form name="expense" action="post">
