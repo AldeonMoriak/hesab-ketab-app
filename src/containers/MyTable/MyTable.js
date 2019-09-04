@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "../../axios-exp";
 
-const styles = {
+const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing(3),
@@ -17,25 +17,59 @@ const styles = {
   table: {
     minWidth: 650
   }
-};
+});
 class MyTable extends Component {
   state = {
     reports: [],
     error: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
+    const fetchedReports = [];
     axios
       .get("/api/housecost/getallsells")
       .then(response => {
-        const fetchedReports = [];
+        // eslint-disable-next-line
         for (let key in response.data) {
           fetchedReports.push({
             ...response.data[key],
-            id: key
+            id: +key + 1
           });
         }
+        // console.log(fetchedReports);
+        // eslint-disable-next-line
+        for (let report in fetchedReports) {
+          // console.log(fetchedReports[report].Type);
+          fetchedReports[report].Type = this.switchHandler(
+            fetchedReports[report].Type
+          );
+          // console.log("report type: ", fetchedReports[report].Type);
+          fetchedReports[report].SpenderId = this.spenderIdHandler(
+            fetchedReports[report].SpenderId
+          );
+          // console.log("report[spenderId] ", fetchedReports[report].SpenderId);
+        }
         this.setState({ reports: fetchedReports });
+        // console.log("State: ", this.state.reports);
+
+        const cellMaker = () => {
+          console.log(this.state.reports);
+          let cells = [];
+          for (let i = 0; i <= this.state.reports.length; i++) {
+            let cell = [];
+            const length = Object.keys(this.state.reports[i]).length;
+            for (let j = 0; j < length; j++) {
+              console.log(this.state.reports[j]);
+              const el = this.state.reports[j];
+              cell = el[i];
+              console.log(cell);
+              cells.push(cell);
+            }
+          }
+          console.log(`Cells: ${cells}`);
+          return cells;
+        };
+        cellMaker();
       })
       .catch(error => {
         this.setState({ error: true });
@@ -43,7 +77,8 @@ class MyTable extends Component {
   }
 
   switchHandler = condition => {
-    const persons = [];
+    let persons = [];
+    // eslint-disable-next-line
     switch (condition) {
       case 1:
         persons = ["Ashkan", "Amin", "Mehran"];
@@ -66,12 +101,12 @@ class MyTable extends Component {
       case 7:
         persons = ["Mehran"];
         break;
-      // eslint-disable-next-line
     }
     return persons;
   };
   spenderIdHandler = id => {
-    const spender = "";
+    let spender = "";
+    // eslint-disable-next-line
     switch (id) {
       case 1:
         spender = "Amin";
@@ -82,24 +117,19 @@ class MyTable extends Component {
       case 3:
         spender = "Mehran";
         break;
-      // eslint-disable-next-line
     }
     return spender;
   };
 
   render() {
-    const fetchedReports = [...this.state.reports];
-    console.log(fetchedReports);
-    for (let report in fetchedReports) {
-      console.log(report.Type);
-      fetchedReports.report.Type = this.switchHandler(report[Type]);
-      fetchedReports.report.SpenderId = this.spenderIdHandler(
-        report[SpenderId]
-      );
-    }
-    this.setState({ reports: fetchedReports });
     const cells = null;
-
+    // this.state.reports.map(row => {
+    //   <TableRow>
+    //     {this.state.reports[row].map(cell => {
+    //       <TableCell align="left">{}</TableCell>;
+    //     })}
+    //   </TableRow>;
+    // });
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
