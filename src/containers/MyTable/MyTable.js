@@ -21,7 +21,8 @@ const styles = theme => ({
 class MyTable extends Component {
   state = {
     reports: [],
-    error: false
+    error: false,
+    cells: []
   };
 
   componentDidMount() {
@@ -77,9 +78,8 @@ class MyTable extends Component {
               }
             }
           }
-
-          console.log('cells', cells);
-          return cells;
+          console.log(cells);
+          this.setState({cells: cells});
         };
         cellMaker();
       })
@@ -134,21 +134,32 @@ class MyTable extends Component {
   };
 
   render() {
-    const cells = null;
-    // this.state.reports.map(row => {
-    //   <TableRow>
-    //     {this.state.reports[row].map(cell => {
-    //       <TableCell align="left">{}</TableCell>;
-    //     })}
-    //   </TableRow>;
-    // });
+    const cells = this.state.cells;
+    let content = [];
+    
+    for (let i = 1; i < cells.length-1; i++ ) {
+      content.push(cells.map(key => (
+        <TableRow key={key['id']}>
+          <TableCell component='th' scope='row'>
+            {key[i]}
+          </TableCell>
+        </TableRow>
+      )))
+    }
+    console.log(content);
+    
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
-            <TableRow>{cells}</TableRow>
+            <TableRow>{cells.map(key => (
+              <TableCell align="center" key={key[0]}>{key[0]}</TableCell>
+            ))}</TableRow>
           </TableHead>
+          <TableBody>
+            {content.map(key => (key))}
+          </TableBody>
         </Table>
       </Paper>
     );
