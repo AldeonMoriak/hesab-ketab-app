@@ -27,7 +27,7 @@ class MyTable extends Component {
   componentDidMount() {
     const fetchedReports = [];
     axios
-      .get("/api/housecost/getallsells")
+      .get("aldeonmoriak/jsonApi/0")
       .then(response => {
         // eslint-disable-next-line
         for (let key in response.data) {
@@ -53,20 +53,32 @@ class MyTable extends Component {
         // console.log("State: ", this.state.reports);
 
         const cellMaker = () => {
-          console.log(this.state.reports);
+          const reports = [...this.state.reports];
           let cells = [];
-          for (let i = 0; i <= this.state.reports.length; i++) {
-            let cell = [];
-            const length = Object.keys(this.state.reports[i]).length;
-            for (let j = 0; j < length; j++) {
-              console.log(this.state.reports[j]);
-              const el = this.state.reports[j];
-              cell = el[i];
-              console.log(cell);
-              cells.push(cell);
+
+          // eslint-disable-next-line
+          for (let key of Object.keys(reports[0])) {
+            cells.push([key]);
+          }
+
+          // going through every member of reports array
+          // eslint-disable-next-line
+          for (let el of reports) {
+            //assigning element to array version of every object in reports
+            const element = Object.keys(el);
+            // going through every member of element array
+            for (let i = 0; i < element.length; i++) {
+              // going throught every element of cell array
+              for (let j = 0; j < cells.length; j++) {
+                // checking if the first member of the inner array of rowArray is equal to the value of current element member
+                if (cells[j][0] === element[i]) {
+                  cells[j].push(el[element[i]]);
+                }
+              }
             }
           }
-          console.log(`Cells: ${cells}`);
+
+          console.log('cells', cells);
           return cells;
         };
         cellMaker();
