@@ -138,15 +138,12 @@ class MyTable extends Component {
     let content = [];
     
     for (let i = 1; i < cells.length-1; i++ ) {
-      content.push(cells.map(key => (
-        <TableRow key={key['id']}>
-          <TableCell component='th' scope='row'>
+      content.push([cells.map(key => (
+          <TableCell align='center' component='th' scope='row'>
             {key[i]}
           </TableCell>
-        </TableRow>
-      )))
+      ))])
     }
-    console.log(content);
     
     const { classes } = this.props;
     return (
@@ -158,7 +155,11 @@ class MyTable extends Component {
             ))}</TableRow>
           </TableHead>
           <TableBody>
-            {content.map(key => (key))}
+            {content.map(key => (
+              <TableRow key={key.toString()}>
+                {key}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Paper>
