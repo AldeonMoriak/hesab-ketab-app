@@ -33,8 +33,8 @@ class MyTable extends Component {
         // eslint-disable-next-line
         for (let key in response.data) {
           fetchedReports.push({
-            ...response.data[key],
-            id: +key + 1
+            No: +key + 1,
+            ...response.data[key]
           });
         }
         // console.log(fetchedReports);
@@ -72,8 +72,11 @@ class MyTable extends Component {
               // going throught every element of cell array
               for (let j = 0; j < cells.length; j++) {
                 // checking if the first member of the inner array of rowArray is equal to the value of current element member
-                if (cells[j][0] === element[i]) {
+                const condition = cells[j][0] === element[i];
+                if (condition && element[i] !== 'Type') {
                   cells[j].push(el[element[i]]);
+                } else if (condition && (el[element[i]]).length > 1) {
+                  cells[j].push(el[element[i]].join(", "));
                 }
               }
             }
@@ -138,11 +141,11 @@ class MyTable extends Component {
     let content = [];
     
     for (let i = 1; i < cells.length-1; i++ ) {
-      content.push([cells.map(key => (
-          <TableCell align='center' component='th' scope='row'>
+      content.push([cells.map((key, index) => (
+          <TableCell key={index} align='center' component='th' scope='row'>
             {key[i]}
           </TableCell>
-      ))])
+      ))]);
     }
     
     const { classes } = this.props;
@@ -150,13 +153,13 @@ class MyTable extends Component {
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
-            <TableRow>{cells.map(key => (
-              <TableCell align="center" key={key[0]}>{key[0]}</TableCell>
+            <TableRow>{cells.map((key, index) => (
+              <TableCell align="center" key={index}>{key[0]}</TableCell>
             ))}</TableRow>
           </TableHead>
           <TableBody>
-            {content.map(key => (
-              <TableRow key={key.toString()}>
+            {content.map((key, index) => (
+              <TableRow key={index}>
                 {key}
               </TableRow>
             ))}
