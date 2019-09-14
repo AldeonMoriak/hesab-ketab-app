@@ -30,6 +30,7 @@ class MyTable extends Component {
       .get("/api/housecost/getallsells")
       .then(response => {
         // eslint-disable-next-line
+        // change in to of
         for (let key in response.data) {
           fetchedReports.push({
             ...response.data[key],
@@ -55,20 +56,24 @@ class MyTable extends Component {
         const cellMaker = () => {
           console.log(this.state.reports);
           let cells = [];
+
           for (let i = 0; i <= this.state.reports.length; i++) {
             let cell = [];
             const length = Object.keys(this.state.reports[i]).length;
+
             for (let j = 0; j < length; j++) {
               console.log(this.state.reports[j]);
-              const el = this.state.reports[j];
+              const el = this.state.reports[j][i];
               cell = el[i];
               console.log(cell);
               cells.push(cell);
             }
           }
+
           console.log(`Cells: ${cells}`);
           return cells;
         };
+
         cellMaker();
       })
       .catch(error => {
