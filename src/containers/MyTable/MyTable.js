@@ -22,7 +22,8 @@ class MyTable extends Component {
   state = {
     reports: [],
     error: false,
-    cells: []
+    cells: [],
+    columnNames: []
   };
 
   componentDidMount() {
@@ -54,36 +55,62 @@ class MyTable extends Component {
         this.setState({ reports: fetchedReports });
         // console.log("State: ", this.state.reports);
 
+        // const cellMaker = () => {
+        //   const reports = [...this.state.reports];
+        //   let cells = [];
+
+        //   // eslint-disable-next-line
+        //   for (let key of Object.keys(reports[0])) {
+        //     cells.push([key]);
+        //   }
+
+        //   // going through every member of reports array
+        //   // eslint-disable-next-line
+        //   for (let el of reports) {
+        //     //assigning element to array version of every object in reports
+        //     const element = Object.keys(el);
+        //     // going through every member of element array
+        //     for (let i = 0; i < element.length; i++) {
+        //       // going throught every element of cell array
+        //       for (let j = 0; j < cells.length; j++) {
+        //         // checking if the first member of the inner array of rowArray is equal to the value of current element member
+        //         const condition = cells[j][0] === element[i];
+        //         if (condition && element[i] !== "Type") {
+        //           cells[j].push(el[element[i]]);
+        //         } else if (condition && el[element[i]].length > 1) {
+        //           cells[j].push(el[element[i]].join(", "));
+        //         }
+        //       }
+        //     }
+        //   }
+        //   console.log(cells);
+        //   this.setState({ cells: cells });
+        // };
+
         const cellMaker = () => {
           const reports = [...this.state.reports];
+          console.log(reports);
           let cells = [];
-
-          // eslint-disable-next-line
-          for (let key of Object.keys(reports[0])) {
-            cells.push([key]);
+          const columnNames = [];
+          for (let key in reports[0]) {
+            columnNames.push(key);
           }
-
-          // going through every member of reports array
-          // eslint-disable-next-line
-          for (let el of reports) {
-            //assigning element to array version of every object in reports
-            const element = Object.keys(el);
-            // going through every member of element array
-            for (let i = 0; i < element.length; i++) {
-              // going throught every element of cell array
-              for (let j = 0; j < cells.length; j++) {
-                // checking if the first member of the inner array of rowArray is equal to the value of current element member
-                const condition = cells[j][0] === element[i];
-                if (condition && element[i] !== "Type") {
-                  cells[j].push(el[element[i]]);
-                } else if (condition && el[element[i]].length > 1) {
-                  cells[j].push(el[element[i]].join(", "));
-                }
+          for (let key of reports) {
+            let elements = [];
+            for (let element in key) {
+              if (element === "Type") {
+                elements.push(key[element].join(", "));
+              } else {
+                elements.push(key[element]);
               }
             }
+            cells.push(elements);
           }
           console.log(cells);
-          this.setState({ cells: cells });
+          this.setState({
+            cells: cells,
+            columnNames: columnNames
+          });
         };
 
         cellMaker();
@@ -140,16 +167,19 @@ class MyTable extends Component {
 
   render() {
     const cells = this.state.cells;
+    const columnNames = this.state.columnNames;
     let content = [];
 
-    for (let i = 1; i < cells.length - 1; i++) {
-      content.push([
-        cells.map((key, index) => (
-          <TableCell key={index} align="center" component="th" scope="row">
-            {key[i]}
-          </TableCell>
-        ))
-      ]);
+    for (let i = 0; i < cells.length; i++) {
+      content.push(
+        <TableRow key={i}>
+          {cells.map((key, index) => (
+            <TableCell key={index} align="center" component="th" scope="row">
+              {key}
+            </TableCell>
+          ))}
+        </TableRow>
+      );
     }
 
     const { classes } = this.props;
@@ -158,18 +188,14 @@ class MyTable extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {cells.map((key, index) => (
+              {columnNames.map((key, index) => (
                 <TableCell align="center" key={index}>
-                  {key[0]}
+                  {key}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {content.map((key, index) => (
-              <TableRow key={index}>{key}</TableRow>
-            ))}
-          </TableBody>
+          <TableBody>{content.map((key, index) => key)}</TableBody>
         </Table>
       </Paper>
     );
