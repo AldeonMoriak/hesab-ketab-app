@@ -29,7 +29,7 @@ class MyTable extends Component {
   componentDidMount() {
     const fetchedReports = [];
     axios
-      .get("aldeonmoriak/jsonApi/0")
+      .get("/api/housecost/getallsells")
       .then(response => {
         // eslint-disable-next-line
         // change in to of
@@ -170,17 +170,17 @@ class MyTable extends Component {
     const columnNames = this.state.columnNames;
     let content = [];
 
-    for (let i = 0; i < cells.length; i++) {
-      content.push(
-        <TableRow key={i}>
-          {cells.map((key, index) => (
+    content.push(
+      cells.map((key, indexRow) => (
+        <TableRow key={indexRow}>
+          {key.map((element, index) => (
             <TableCell key={index} align="center" component="th" scope="row">
-              {key}
+              {element}
             </TableCell>
           ))}
         </TableRow>
-      );
-    }
+      ))
+    );
 
     const { classes } = this.props;
     return (
@@ -195,7 +195,7 @@ class MyTable extends Component {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{content.map((key, index) => key)}</TableBody>
+          <TableBody>{content[0].map(key => key)}</TableBody>
         </Table>
       </Paper>
     );

@@ -88,7 +88,7 @@ class Expense extends Component {
     this.toGet();
     axios
       .get(`/api/HouseCost/InsertSell${this.url}`)
-      .then(response => console.log(response))
+      .then(response => alert("با موفقیت فرستاده شد!"))
       .catch(error => console.log(error));
 
     // axios
