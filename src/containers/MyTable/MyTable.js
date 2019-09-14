@@ -21,20 +21,21 @@ const styles = theme => ({
 class MyTable extends Component {
   state = {
     reports: [],
-    error: false
+    error: false,
+    cells: []
   };
 
   componentDidMount() {
     const fetchedReports = [];
     axios
-      .get("/api/housecost/getallsells")
+      .get("aldeonmoriak/jsonApi/0")
       .then(response => {
         // eslint-disable-next-line
         // change in to of
         for (let key in response.data) {
           fetchedReports.push({
-            ...response.data[key],
-            id: +key + 1
+            No: +key + 1,
+            ...response.data[key]
           });
         }
         // console.log(fetchedReports);
@@ -54,24 +55,35 @@ class MyTable extends Component {
         // console.log("State: ", this.state.reports);
 
         const cellMaker = () => {
-          console.log(this.state.reports);
+          const reports = [...this.state.reports];
           let cells = [];
 
-          for (let i = 0; i <= this.state.reports.length; i++) {
-            let cell = [];
-            const length = Object.keys(this.state.reports[i]).length;
-
-            for (let j = 0; j < length; j++) {
-              console.log(this.state.reports[j]);
-              const el = this.state.reports[j][i];
-              cell = el[i];
-              console.log(cell);
-              cells.push(cell);
-            }
+          // eslint-disable-next-line
+          for (let key of Object.keys(reports[0])) {
+            cells.push([key]);
           }
 
-          console.log(`Cells: ${cells}`);
-          return cells;
+          // going through every member of reports array
+          // eslint-disable-next-line
+          for (let el of reports) {
+            //assigning element to array version of every object in reports
+            const element = Object.keys(el);
+            // going through every member of element array
+            for (let i = 0; i < element.length; i++) {
+              // going throught every element of cell array
+              for (let j = 0; j < cells.length; j++) {
+                // checking if the first member of the inner array of rowArray is equal to the value of current element member
+                const condition = cells[j][0] === element[i];
+                if (condition && element[i] !== "Type") {
+                  cells[j].push(el[element[i]]);
+                } else if (condition && el[element[i]].length > 1) {
+                  cells[j].push(el[element[i]].join(", "));
+                }
+              }
+            }
+          }
+          console.log(cells);
+          this.setState({ cells: cells });
         };
 
         cellMaker();
@@ -127,21 +139,37 @@ class MyTable extends Component {
   };
 
   render() {
-    const cells = null;
-    // this.state.reports.map(row => {
-    //   <TableRow>
-    //     {this.state.reports[row].map(cell => {
-    //       <TableCell align="left">{}</TableCell>;
-    //     })}
-    //   </TableRow>;
-    // });
+    const cells = this.state.cells;
+    let content = [];
+
+    for (let i = 1; i < cells.length - 1; i++) {
+      content.push([
+        cells.map((key, index) => (
+          <TableCell key={index} align="center" component="th" scope="row">
+            {key[i]}
+          </TableCell>
+        ))
+      ]);
+    }
+
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
-            <TableRow>{cells}</TableRow>
+            <TableRow>
+              {cells.map((key, index) => (
+                <TableCell align="center" key={index}>
+                  {key[0]}
+                </TableCell>
+              ))}
+            </TableRow>
           </TableHead>
+          <TableBody>
+            {content.map((key, index) => (
+              <TableRow key={index}>{key}</TableRow>
+            ))}
+          </TableBody>
         </Table>
       </Paper>
     );
