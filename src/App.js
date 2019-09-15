@@ -26,7 +26,7 @@ class App extends Component {
           onButtonClick={this.handleTableRender}
         />
         {/* <SignIn /> */}
-        <MyTable />
+        <MyTable myTableRenderer={this.state.myTableRenderer} />
       </div>
     );
   }

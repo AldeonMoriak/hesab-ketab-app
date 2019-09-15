@@ -91,7 +91,6 @@ class Expense extends PureComponent {
       .then(response => {
         const { onButtonClick, tableRendererState } = this.props;
         onButtonClick(tableRendererState);
-        alert("با موفقیت فرستاده شد!");
       })
 
       .catch(error => console.log(error));

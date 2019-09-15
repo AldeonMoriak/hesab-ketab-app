@@ -26,7 +26,33 @@ class MyTable extends PureComponent {
     columnNames: []
   };
 
-  componentDidMount() {
+  cellMaker = () => {
+    const reports = [...this.state.reports];
+    console.log(reports);
+    let cells = [];
+    const columnNames = [];
+    for (let key in reports[0]) {
+      columnNames.push(key);
+    }
+    for (let key of reports) {
+      let elements = [];
+      for (let element in key) {
+        if (element === "Type") {
+          elements.push(key[element].join(", "));
+        } else {
+          elements.push(key[element]);
+        }
+      }
+      cells.push(elements);
+    }
+    console.log(cells);
+    this.setState({
+      cells: cells,
+      columnNames: columnNames
+    });
+  };
+
+  toGetAllSells = () => {
     const fetchedReports = [];
     axios
       .get("/api/housecost/getallsells")
@@ -82,37 +108,21 @@ class MyTable extends PureComponent {
         //   this.setState({ cells: cells });
         // };
 
-        const cellMaker = () => {
-          const reports = [...this.state.reports];
-          console.log(reports);
-          let cells = [];
-          const columnNames = [];
-          for (let key in reports[0]) {
-            columnNames.push(key);
-          }
-          for (let key of reports) {
-            let elements = [];
-            for (let element in key) {
-              if (element === "Type") {
-                elements.push(key[element].join(", "));
-              } else {
-                elements.push(key[element]);
-              }
-            }
-            cells.push(elements);
-          }
-          console.log(cells);
-          this.setState({
-            cells: cells,
-            columnNames: columnNames
-          });
-        };
-
-        cellMaker();
+        this.cellMaker();
       })
       .catch(error => {
         this.setState({ error: true });
       });
+  };
+
+  componentDidMount() {
+    this.toGetAllSells();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.myTableRenderer !== prevProps.myTableRenderer) {
+      this.toGetAllSells();
+    }
   }
 
   switchHandler = condition => {
