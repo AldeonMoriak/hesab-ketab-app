@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import classes from "./Expense.module.css";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import axios from "../../axios-exp";
 
-class Expense extends Component {
+class Expense extends PureComponent {
   state = {
     elements: {
       SpenderId: "",
@@ -88,7 +88,12 @@ class Expense extends Component {
     this.toGet();
     axios
       .get(`/api/HouseCost/InsertSell${this.url}`)
-      .then(response => alert("با موفقیت فرستاده شد!"))
+      .then(response => {
+        const { onButtonClick, tableRendererState } = this.props;
+        onButtonClick(tableRendererState);
+        alert("با موفقیت فرستاده شد!");
+      })
+
       .catch(error => console.log(error));
 
     // axios

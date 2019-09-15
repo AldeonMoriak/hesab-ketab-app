@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,7 +18,7 @@ const styles = theme => ({
     minWidth: 650
   }
 });
-class MyTable extends Component {
+class MyTable extends PureComponent {
   state = {
     reports: [],
     error: false,
@@ -53,19 +53,15 @@ class MyTable extends Component {
           // console.log("report[spenderId] ", fetchedReports[report].SpenderId);
         }
         this.setState({ reports: fetchedReports });
-        // console.log("State: ", this.state.reports);
-
         // const cellMaker = () => {
         //   const reports = [...this.state.reports];
         //   let cells = [];
 
-        //   // eslint-disable-next-line
         //   for (let key of Object.keys(reports[0])) {
         //     cells.push([key]);
         //   }
 
         //   // going through every member of reports array
-        //   // eslint-disable-next-line
         //   for (let el of reports) {
         //     //assigning element to array version of every object in reports
         //     const element = Object.keys(el);
@@ -83,7 +79,6 @@ class MyTable extends Component {
         //       }
         //     }
         //   }
-        //   console.log(cells);
         //   this.setState({ cells: cells });
         // };
 
