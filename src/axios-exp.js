@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://my-json-server.typicode.com/"
+  baseURL: "http://192.168.1.151:75/"
 });
 // instance.defaults.headers.post["Content-Type"] = "application/json";
 // instance.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
@@ -10,3 +10,4 @@ const instance = axios.create({
 export default instance;
 
 // http://192.168.1.151:75
+// https://my-json-server.typicode.com/

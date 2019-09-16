@@ -71,11 +71,11 @@ class MyTable extends PureComponent {
       columnNames: columnNames
     });
   };
-
+  // AldeonMoriak/jsonApi/0
   toGetAllSells = () => {
     const fetchedReports = [];
     axios
-      .get("AldeonMoriak/jsonApi/0")
+      .get("api/housecost/getallsells")
       .then(response => {
         // eslint-disable-next-line
         // change in to of

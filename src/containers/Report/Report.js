@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "react-persian-calendar-date-picker/lib/DatePicker.css";
 import DatePicker from "react-persian-calendar-date-picker";
-import { getThemeProps } from "@material-ui/styles";
+import moment from "jalali-moment";
+import axios from "../../axios-exp";
 
-const Report = props => {
+function Report(props) {
   const [selectedDayRange, setSelectedDayRange] = useState({
     from: null,
     to: null
@@ -11,6 +12,11 @@ const Report = props => {
 
   useEffect(() => {
     props.onDateChange(selectedDayRange);
+    const convertedDate = moment
+      .from("1392/6/3", "fa", "YYYY/M/D")
+      .format("YYYY-M-D");
+    props.onConvertedDate(convertedDate);
+    axios.get("api/housecost/GetReport");
   }, [selectedDayRange]);
 
   return (
@@ -21,6 +27,6 @@ const Report = props => {
       isDayRange
     />
   );
-};
+}
 
 export default Report;

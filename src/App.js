@@ -11,7 +11,8 @@ class App extends Component {
     date: {
       from: null,
       to: null
-    }
+    },
+    convertedDate: ""
   };
 
   handleTableRender = myTableRenderer => {
@@ -26,6 +27,10 @@ class App extends Component {
     this.setState({ date });
   };
 
+  convertDateHandler = convertedDate => {
+    this.setState({ convertedDate });
+  };
+
   render() {
     // const date = this.state.date
     //   ? null
@@ -36,8 +41,11 @@ class App extends Component {
           tableRendererState={this.state.myTableRenderer}
           onButtonClick={this.handleTableRender}
         />
-        <Report onDateChange={this.dateHandler} />
-        {console.log(this.state.date)}
+        <Report
+          onConvertedDate={this.convertDateHandler}
+          onDateChange={this.dateHandler}
+        />
+        {console.log(this.state.convertedDate)}
         {/* <SignIn /> */}
         <MyTable myTableRenderer={this.state.myTableRenderer} />
       </div>

@@ -5,7 +5,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import axios from "../../axios-exp";
-import { display } from "@material-ui/system";
+import URLGenerator from "../components/URLGenerator/URLGenerator";
 
 class Expense extends PureComponent {
   state = {
@@ -22,22 +22,9 @@ class Expense extends PureComponent {
   url = "";
   // returning the needed url
   toGet = () => {
-    let url = "?";
     // using typeGenerator version of state
     const updatedState = this.typeGenerator();
-    let updatedStateArr = [];
-    // eslint-disable-next-line
-    for (let element in updatedState) {
-      updatedStateArr.push(element);
-    }
-    // eslint-disable-next-line
-    for (let element in updatedState) {
-      url = url.concat(`${element}=${updatedState[element]}`);
-      if (updatedStateArr.length - 1 !== updatedStateArr.indexOf(element)) {
-        url = url.concat("&");
-      }
-    }
-    this.url = url;
+    this.url = URLGenerator(updatedState);
   };
 
   // returning the updated state where type and spenderId are of int to send to the backend
