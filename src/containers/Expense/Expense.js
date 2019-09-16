@@ -5,6 +5,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import axios from "../../axios-exp";
+import { display } from "@material-ui/system";
 
 class Expense extends PureComponent {
   state = {
@@ -120,49 +121,65 @@ class Expense extends PureComponent {
     return (
       <div className={classes.Expense}>
         <form name="expense" action="post">
-          Spender:
-          <Select
-            className={classes.Select}
-            value={this.state.elements.SpenderId}
-            name="SpenderId"
-            onChange={this.changeHandler}
-          >
-            {items}
-          </Select>
-          Stuff:{" "}
-          <Input
-            className={classes.Input}
-            name="StuffName"
-            type="text"
-            onChange={this.changeHandler}
-          />
-          Price:{" "}
-          <Input
-            className={classes.Input}
-            name="Price"
-            type="number"
-            onChange={this.changeHandler}
-          />
-          Description:{" "}
-          <Input
-            className={classes.Input}
-            name="Description"
-            type="text"
-            onChange={this.changeHandler}
-          />
-          Participants:{" "}
-          <Select
-            className={classes.Select}
-            value={this.state.elements.Type}
-            name="Type"
-            multiple
-            onChange={this.changeHandler}
-          >
-            {items}
-          </Select>
-          <Button size="small" variant="contained" onClick={this.clickHandler}>
-            ok
-          </Button>
+          <span>
+            Spender:
+            <Select
+              className={classes.Select}
+              value={this.state.elements.SpenderId}
+              name="SpenderId"
+              onChange={this.changeHandler}
+            >
+              {items}
+            </Select>
+          </span>
+          <span>
+            Stuff:{" "}
+            <Input
+              className={classes.Input}
+              name="StuffName"
+              type="text"
+              onChange={this.changeHandler}
+            />
+          </span>
+          <span>
+            Price:{" "}
+            <Input
+              className={classes.Input}
+              name="Price"
+              type="number"
+              onChange={this.changeHandler}
+            />
+          </span>
+          <span>
+            Description:{" "}
+            <Input
+              className={classes.Input}
+              name="Description"
+              type="text"
+              onChange={this.changeHandler}
+            />
+          </span>
+          <span>
+            Participants:{" "}
+            <Select
+              className={classes.Select}
+              value={this.state.elements.Type}
+              name="Type"
+              multiple
+              onChange={this.changeHandler}
+            >
+              {items}
+            </Select>
+          </span>
+          <span className={classes.Button}>
+            <Button
+              size="small"
+              variant="contained"
+              onClick={this.clickHandler}
+            >
+              ok
+            </Button>
+          </span>
         </form>
       </div>
     );

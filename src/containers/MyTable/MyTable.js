@@ -14,10 +14,30 @@ const styles = theme => ({
     marginTop: theme.spacing(3),
     overflowX: "auto"
   },
+
   table: {
-    minWidth: 650
+    minWidth: 700
   }
 });
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14
+  }
+}))(TableCell);
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: "#ccc"
+    }
+  }
+}))(TableRow);
+
 class MyTable extends PureComponent {
   state = {
     reports: [],
@@ -55,7 +75,7 @@ class MyTable extends PureComponent {
   toGetAllSells = () => {
     const fetchedReports = [];
     axios
-      .get("/api/housecost/getallsells")
+      .get("AldeonMoriak/jsonApi/0")
       .then(response => {
         // eslint-disable-next-line
         // change in to of
@@ -177,13 +197,18 @@ class MyTable extends PureComponent {
 
     content.push(
       cells.map((key, indexRow) => (
-        <TableRow key={indexRow}>
+        <StyledTableRow key={indexRow}>
           {key.map((element, index) => (
-            <TableCell key={index} align="center" component="th" scope="row">
+            <StyledTableCell
+              key={index}
+              align="center"
+              component="th"
+              scope="row"
+            >
               {element}
-            </TableCell>
+            </StyledTableCell>
           ))}
-        </TableRow>
+        </StyledTableRow>
       ))
     );
 
@@ -194,9 +219,9 @@ class MyTable extends PureComponent {
           <TableHead>
             <TableRow>
               {columnNames.map((key, index) => (
-                <TableCell align="center" key={index}>
+                <StyledTableCell align="center" key={index}>
                   {key}
-                </TableCell>
+                </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>

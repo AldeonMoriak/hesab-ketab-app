@@ -1,7 +1,8 @@
-.Expense {
-  text-align: center;
-}
-
-div {
-  text-align: center;
+.App {
+  position: relative;
+  width: 100%;
+  box-shadow: 1px 1px 1px #ccc;
+  padding: 2em;
+  margin: auto;
+  align-content: center;
 }

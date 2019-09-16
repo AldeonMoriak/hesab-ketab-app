@@ -1,17 +1,19 @@
 .Expense {
-  position: relative;
   background-color: white;
-  width: 100%;
   height: 35%;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px #ccc;
   padding: 30px;
-  margin: 20px;
   align-content: center;
 }
-.Select,
-.Input {
-  margin: 5px;
+
+span {
+  display: inline-block;
+  margin: 0.3em;
+}
+
+.Button {
+  margin: 1em;
 }
 
 /* div {
