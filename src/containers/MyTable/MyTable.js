@@ -7,6 +7,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "../../axios-exp";
+import moment from "jalali-moment";
 
 const styles = theme => ({
   root: {
@@ -59,6 +60,14 @@ class MyTable extends PureComponent {
       for (let element in key) {
         if (element === "Type") {
           elements.push(key[element].join(", "));
+        } else if (element === "CreateDateTime") {
+          elements.push(
+            elements.push(
+              moment(`${key[element]}`, "DD-MM-YYYY")
+                .locale("fa")
+                .format("YYYY/M/D")
+            )
+          );
         } else {
           elements.push(key[element]);
         }

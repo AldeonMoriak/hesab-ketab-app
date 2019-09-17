@@ -6,3 +6,7 @@
   margin: auto;
   align-content: center;
 }
+
+.Report {
+  float: right !important;
+}

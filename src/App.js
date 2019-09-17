@@ -42,6 +42,7 @@ class App extends Component {
           onButtonClick={this.handleTableRender}
         />
         <Report
+          className={classes.Report}
           onConvertedDate={this.convertDateHandler}
           onDateChange={this.dateHandler}
         />

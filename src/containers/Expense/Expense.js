@@ -80,7 +80,6 @@ class Expense extends PureComponent {
         const { onButtonClick, tableRendererState } = this.props;
         onButtonClick(tableRendererState);
       })
-
       .catch(error => console.log(error));
 
     // axios
