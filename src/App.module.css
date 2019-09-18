@@ -1,12 +1,12 @@
-.App {
+/* .App {
   position: relative;
   width: 100%;
   box-shadow: 1px 1px 1px #ccc;
-  padding: 2em;
-  margin: auto;
-  align-content: center;
-}
+  /* padding: 2em; */
+/* margin: auto; */
+/* align-content: center; */
+/* } */
 
-.Report {
-  float: right !important;
+.Child {
+  padding: 2em;
 }

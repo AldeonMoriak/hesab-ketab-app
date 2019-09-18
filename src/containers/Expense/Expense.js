@@ -110,7 +110,6 @@ class Expense extends PureComponent {
           <span>
             Spender:
             <Select
-              className={classes.Select}
               value={this.state.elements.SpenderId}
               name="SpenderId"
               onChange={this.changeHandler}
@@ -120,26 +119,15 @@ class Expense extends PureComponent {
           </span>
           <span>
             Stuff:{" "}
-            <Input
-              className={classes.Input}
-              name="StuffName"
-              type="text"
-              onChange={this.changeHandler}
-            />
+            <Input name="StuffName" type="text" onChange={this.changeHandler} />
           </span>
           <span>
             Price:{" "}
-            <Input
-              className={classes.Input}
-              name="Price"
-              type="number"
-              onChange={this.changeHandler}
-            />
+            <Input name="Price" type="number" onChange={this.changeHandler} />
           </span>
           <span>
             Description:{" "}
             <Input
-              className={classes.Input}
               name="Description"
               type="text"
               onChange={this.changeHandler}
@@ -148,7 +136,6 @@ class Expense extends PureComponent {
           <span>
             Participants:{" "}
             <Select
-              className={classes.Select}
               value={this.state.elements.Type}
               name="Type"
               multiple

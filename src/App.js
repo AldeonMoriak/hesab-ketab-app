@@ -36,13 +36,12 @@ class App extends Component {
     //   ? null
     //   : `${this.state.date.from} till ${this.state.date.to}`;
     return (
-      <div className={classes.App}>
+      <div className={classes.Child}>
         <Expense
           tableRendererState={this.state.myTableRenderer}
           onButtonClick={this.handleTableRender}
         />
         <Report
-          className={classes.Report}
           onConvertedDate={this.convertDateHandler}
           onDateChange={this.dateHandler}
         />
