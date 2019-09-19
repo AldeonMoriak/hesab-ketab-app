@@ -81,10 +81,11 @@ class MyTable extends PureComponent {
     });
   };
   // AldeonMoriak/jsonApi/0
+  //api/housecost/getallsells
   toGetAllSells = () => {
     const fetchedReports = [];
     axios
-      .get("api/housecost/getallsells")
+      .get("AldeonMoriak/jsonApi/0")
       .then(response => {
         // eslint-disable-next-line
         // change in to of

@@ -139,6 +139,12 @@ class Expense extends PureComponent {
               type="number"
               onChange={this.changeHandler}
             />
+            Stuff:{" "}
+            <Input name="StuffName" type="text" onChange={this.changeHandler} />
+          </span>
+          <span>
+            Price:{" "}
+            <Input name="Price" type="number" onChange={this.changeHandler} />
           </span>
           <span>
             <Input

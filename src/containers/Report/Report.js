@@ -45,7 +45,6 @@ function Report(props) {
 
   return (
     <DatePicker
-      className={classes.Date}
       selectedDayRange={selectedDayRange}
       onChange={setSelectedDayRange}
       inputPlaceholder="انتخاب روزهای نمایش"
