@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import axios from "../../axios-exp";
 import URLGenerator from "../components/URLGenerator/URLGenerator";
+import InputLabel from "@material-ui/core/InputLabel";
 
 class Expense extends PureComponent {
   state = {
@@ -108,19 +109,22 @@ class Expense extends PureComponent {
       <div className={classes.Expense}>
         <form name="expense" action="post">
           <span>
-            Spender:
+            <InputLabel htmlFor="Spender">Spender</InputLabel>
             <Select
+              inputProps={{
+                name: "SpenderId",
+                id: "Spender"
+              }}
               className={classes.Select}
               value={this.state.elements.SpenderId}
-              name="SpenderId"
               onChange={this.changeHandler}
             >
               {items}
             </Select>
           </span>
           <span>
-            Stuff:{" "}
             <Input
+              placeholder="Stuff"
               className={classes.Input}
               name="StuffName"
               type="text"
@@ -128,8 +132,8 @@ class Expense extends PureComponent {
             />
           </span>
           <span>
-            Price:{" "}
             <Input
+              placeholder="Price"
               className={classes.Input}
               name="Price"
               type="number"
@@ -137,8 +141,8 @@ class Expense extends PureComponent {
             />
           </span>
           <span>
-            Description:{" "}
             <Input
+              placeholder="Description"
               className={classes.Input}
               name="Description"
               type="text"
@@ -146,8 +150,9 @@ class Expense extends PureComponent {
             />
           </span>
           <span>
-            Participants:{" "}
+            <InputLabel htmlFor="age-native-simple">Participants</InputLabel>
             <Select
+              placeholder="Participants"
               className={classes.Select}
               value={this.state.elements.Type}
               name="Type"
