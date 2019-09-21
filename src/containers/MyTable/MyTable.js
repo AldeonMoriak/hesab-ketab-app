@@ -61,15 +61,11 @@ class MyTable extends PureComponent {
     for (let key of reports) {
       let elements = [];
       for (let element in key) {
-        if (element === "Type") {
-          elements.push(key[element].join(", "));
-        } else if (element === "CreateDateTime") {
+        if (element === "CreateDateTime") {
           elements.push(
-            elements.push(
-              moment(`${key[element]}`, "DD-MM-YYYY")
-                .locale("fa")
-                .format("YYYY/M/D")
-            )
+            moment(`${key[element]}`, "DD-MM-YYYY")
+              .locale("fa")
+              .format("YYYY/M/D")
           );
         } else {
           elements.push(key[element]);
@@ -112,34 +108,6 @@ class MyTable extends PureComponent {
           // console.log("report[spenderId] ", fetchedReports[report].SpenderId);
         }
         this.setState({ reports: fetchedReports });
-        // const cellMaker = () => {
-        //   const reports = [...this.state.reports];
-        //   let cells = [];
-
-        //   for (let key of Object.keys(reports[0])) {
-        //     cells.push([key]);
-        //   }
-
-        //   // going through every member of reports array
-        //   for (let el of reports) {
-        //     //assigning element to array version of every object in reports
-        //     const element = Object.keys(el);
-        //     // going through every member of element array
-        //     for (let i = 0; i < element.length; i++) {
-        //       // going throught every element of cell array
-        //       for (let j = 0; j < cells.length; j++) {
-        //         // checking if the first member of the inner array of rowArray is equal to the value of current element member
-        //         const condition = cells[j][0] === element[i];
-        //         if (condition && element[i] !== "Type") {
-        //           cells[j].push(el[element[i]]);
-        //         } else if (condition && el[element[i]].length > 1) {
-        //           cells[j].push(el[element[i]].join(", "));
-        //         }
-        //       }
-        //     }
-        //   }
-        //   this.setState({ cells: cells });
-        // };
 
         this.cellMaker();
       })
@@ -163,25 +131,25 @@ class MyTable extends PureComponent {
     // eslint-disable-next-line
     switch (condition) {
       case 1:
-        persons = ["Ashkan", "Amin", "Mehran"];
+        persons = "Ashkan, Amin, Mehran";
         break;
       case 2:
-        persons = ["Amin", "Mehran"];
+        persons = "Amin, Mehran";
         break;
       case 3:
-        persons = ["Amin", "Ashkan"];
+        persons = "Amin, Ashkan";
         break;
       case 4:
-        persons = ["Ashkan", "Mehran"];
+        persons = "Ashkan, Mehran";
         break;
       case 5:
-        persons = ["Amin"];
+        persons = "Amin";
         break;
       case 6:
-        persons = ["Ashkan"];
+        persons = "Ashkan";
         break;
       case 7:
-        persons = ["Mehran"];
+        persons = "Mehran";
         break;
     }
     return persons;

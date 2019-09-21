@@ -5,6 +5,7 @@
   box-shadow: 1px 1px 1px #ccc;
   padding: 30px;
   align-content: center;
+  display: flex;
 }
 
 span {

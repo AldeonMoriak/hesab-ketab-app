@@ -10,3 +10,9 @@
 .Child {
   padding: 2em;
 }
+
+.Report {
+  float: right;
+  clear: both;
+  margin-bottom: 1em;
+}

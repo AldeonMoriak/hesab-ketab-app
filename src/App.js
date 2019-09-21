@@ -41,10 +41,12 @@ class App extends Component {
           tableRendererState={this.state.myTableRenderer}
           onButtonClick={this.handleTableRender}
         />
-        <Report
-          onConvertedDate={this.convertDateHandler}
-          onDateChange={this.dateHandler}
-        />
+        <div className={classes.Report}>
+          <Report
+            onConvertedDate={this.convertDateHandler}
+            onDateChange={this.dateHandler}
+          />
+        </div>
         {console.log(this.state.convertedDate)}
         {/* <SignIn /> */}
         <MyTable myTableRenderer={this.state.myTableRenderer} />
