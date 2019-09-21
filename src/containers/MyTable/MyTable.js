@@ -52,25 +52,27 @@ class MyTable extends PureComponent {
     console.log(reports);
     let cells = [];
     const columnNames = [];
+    // eslint-disable-next-line
     for (let key in reports[0]) {
       columnNames.push(key);
     }
+    // eslint-disable-next-line
     for (let key of reports) {
       let elements = [];
+      // eslint-disable-next-line
       for (let element in key) {
         if (element === "Type") {
           elements.push(key[element].join(", "));
         } else if (element === "CreateDateTime") {
           elements.push(
-            elements.push(
-              moment(`${key[element]}`, "DD-MM-YYYY")
-                .locale("fa")
-                .format("YYYY/M/D")
-            )
+            moment(`${key[element]}`, "DD-MM-YYYY")
+              .locale("fa")
+              .format("YYYY/M/D")
           );
         } else {
           elements.push(key[element]);
         }
+        console.log(element, key[element]);
       }
       cells.push(elements);
     }
@@ -81,14 +83,15 @@ class MyTable extends PureComponent {
     });
   };
   // AldeonMoriak/jsonApi/0
-  //api/housecost/getallsells
+  // /api/housecost/getallsells
   toGetAllSells = () => {
     const fetchedReports = [];
     axios
-      .get("AldeonMoriak/jsonApi/0")
+      .get("/api/housecost/getallsells")
       .then(response => {
         // eslint-disable-next-line
         // change in to of
+        // eslint-disable-next-line
         for (let key in response.data) {
           fetchedReports.push({
             No: +key + 1,

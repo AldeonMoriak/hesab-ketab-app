@@ -1,4 +1,4 @@
-/* * {
-  float: right;
-  margin-right: 1em;
-} */
+.Report {
+  display: flexbox;
+  flex-flow: row;
+}

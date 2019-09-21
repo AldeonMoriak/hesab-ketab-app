@@ -1,12 +1,32 @@
 import React, { PureComponent } from "react";
-import classes from "./Expense.module.css";
+import myClasses from "./Expense.module.css";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 import axios from "../../axios-exp";
 import URLGenerator from "../components/URLGenerator/URLGenerator";
+import { withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+
+const styles = theme => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  }
+});
 
 class Expense extends PureComponent {
   state = {
@@ -105,70 +125,76 @@ class Expense extends PureComponent {
       </MenuItem>
     ));
 
+    const { classes } = this.props;
     return (
-      <div className={classes.Expense}>
+      <div className={myClasses.Expense}>
         <form name="expense" action="post">
           <span>
-            <InputLabel htmlFor="Spender">Spender</InputLabel>
-            <Select
-              inputProps={{
-                name: "SpenderId",
-                id: "Spender"
-              }}
-              className={classes.Select}
-              value={this.state.elements.SpenderId}
-              onChange={this.changeHandler}
-            >
-              {items}
-            </Select>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="SpenderId">Spender</InputLabel>
+              <Select
+                inputProps={{
+                  name: "SpenderId",
+                  id: "Spender"
+                }}
+                className={myClasses.Select}
+                name="SpenderId"
+                value={this.state.elements.SpenderId}
+                onChange={this.changeHandler}
+              >
+                {items}
+              </Select>
+            </FormControl>
           </span>
           <span>
-            <Input
-              placeholder="Stuff"
-              className={classes.Input}
-              name="StuffName"
-              type="text"
-              onChange={this.changeHandler}
-            />
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Stuff"
+                className={myClasses.Input}
+                name="StuffName"
+                type="text"
+                onChange={this.changeHandler}
+              />
+            </FormControl>
           </span>
           <span>
-            <Input
-              placeholder="Price"
-              className={classes.Input}
-              name="Price"
-              type="number"
-              onChange={this.changeHandler}
-            />
-            Stuff:{" "}
-            <Input name="StuffName" type="text" onChange={this.changeHandler} />
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Price"
+                className={myClasses.Input}
+                name="Price"
+                type="number"
+                onChange={this.changeHandler}
+              />
+            </FormControl>
           </span>
           <span>
-            Price:{" "}
-            <Input name="Price" type="number" onChange={this.changeHandler} />
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Description"
+                className={myClasses.Input}
+                name="Description"
+                type="text"
+                onChange={this.changeHandler}
+              />
+            </FormControl>
           </span>
           <span>
-            <Input
-              placeholder="Description"
-              className={classes.Input}
-              name="Description"
-              type="text"
-              onChange={this.changeHandler}
-            />
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="Participants">Participants</InputLabel>
+              <Select
+                placeholder="Participants"
+                className={myClasses.Select}
+                value={this.state.elements.Type}
+                name="Type"
+                multiple
+                onChange={this.changeHandler}
+              >
+                {items}
+              </Select>
+            </FormControl>
           </span>
-          <span>
-            <InputLabel htmlFor="age-native-simple">Participants</InputLabel>
-            <Select
-              placeholder="Participants"
-              className={classes.Select}
-              value={this.state.elements.Type}
-              name="Type"
-              multiple
-              onChange={this.changeHandler}
-            >
-              {items}
-            </Select>
-          </span>
-          <span className={classes.Button}>
+          <span className={myClasses.Button}>
             <Button
               size="small"
               variant="contained"
@@ -183,4 +209,4 @@ class Expense extends PureComponent {
   }
 }
 
-export default Expense;
+export default withStyles(styles)(Expense);

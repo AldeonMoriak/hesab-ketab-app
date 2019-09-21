@@ -13,6 +13,7 @@ function Report(props) {
   });
 
   let convertDateHandler = updatedDateRange => {
+    // eslint-disable-next-line
     for (let date in updatedDateRange) {
       // "1392/6/3"
       // convertedDate.push(
@@ -28,6 +29,8 @@ function Report(props) {
     }
     return updatedDateRange;
   };
+  let fetchedReports = [];
+  let report = [];
 
   useEffect(() => {
     if (selectedDayRange.from && selectedDayRange.to) {
@@ -39,17 +42,44 @@ function Report(props) {
       console.log(updatedDateRange);
       const url = URLGenerator(updatedDateRange);
       // props.onConvertedDate(convertedDate);
-      axios.get(`api/housecost/GetReport${url}`).then(response => {});
-    }
+      console.log(`api/housecost/GetReport${url}`);
+      axios.get(`api/housecost/GetReport${url}`).then(response => {
+        console.log(response.data.ObjList[0]);
+        for (let key in response.data.ObjList[0]) {
+          fetchedReports.push({
+            ...response.data.ObjList[0][key]
+          });
+        }
+        for (let data of fetchedReports) {
+          if (Object.keys(data).length > 0) {
+            for (let key in data) {
+              report.push(`${data[key].Name}: ${data[key].Price}`);
+            }
+          }
+        }
+        console.log(report);
+      });
+    } // eslint-disable-next-line
   }, [selectedDayRange]);
 
   return (
-    <DatePicker
-      selectedDayRange={selectedDayRange}
-      onChange={setSelectedDayRange}
-      inputPlaceholder="انتخاب روزهای نمایش"
-      isDayRange
-    />
+    <div>
+      <DatePicker
+        selectedDayRange={selectedDayRange}
+        onChange={setSelectedDayRange}
+        inputPlaceholder="انتخاب روزهای نمایش"
+        isDayRange
+      />
+      <div className={classes.Report}>
+        {report.map((key, index) => (
+          <div>
+            <p key={index}>
+              {index}: {key}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
