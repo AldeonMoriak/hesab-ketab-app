@@ -41,7 +41,6 @@ class App extends Component {
           tableRendererState={this.state.myTableRenderer}
           onButtonClick={this.handleTableRender}
         />
-
         <div className={classes.Report}>
           <Report
             onConvertedDate={this.convertDateHandler}

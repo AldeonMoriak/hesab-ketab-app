@@ -5,8 +5,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import axios from "../../axios-exp";
-import URLGenerator from "../components/URLGenerator/URLGenerator";
 import { withStyles } from "@material-ui/core/styles";
+import URLGenerator from "../../components/URLGenerator/URLGenerator";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
