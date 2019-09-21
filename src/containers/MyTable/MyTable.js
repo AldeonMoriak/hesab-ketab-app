@@ -52,6 +52,9 @@ class MyTable extends PureComponent {
     console.log(reports);
     let cells = [];
     const columnNames = [];
+    // FIXME: use Object.entries() to simplify the code
+
+    // TODO: and then change the logic to make the right array
     for (let key in reports[0]) {
       columnNames.push(key);
     }
