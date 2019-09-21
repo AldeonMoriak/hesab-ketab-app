@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import axios from "../../axios-exp";
 import URLGenerator from "../../components/URLGenerator/URLGenerator";
+import InputLabel from "@material-ui/core/InputLabel";
 
 class Expense extends PureComponent {
   state = {
@@ -108,16 +109,36 @@ class Expense extends PureComponent {
       <div className={classes.Expense}>
         <form name="expense" action="post">
           <span>
-            Spender:
+            <InputLabel htmlFor="Spender">Spender</InputLabel>
             <Select
+              inputProps={{
+                name: "SpenderId",
+                id: "Spender"
+              }}
+              className={classes.Select}
               value={this.state.elements.SpenderId}
-              name="SpenderId"
               onChange={this.changeHandler}
             >
               {items}
             </Select>
           </span>
           <span>
+            <Input
+              placeholder="Stuff"
+              className={classes.Input}
+              name="StuffName"
+              type="text"
+              onChange={this.changeHandler}
+            />
+          </span>
+          <span>
+            <Input
+              placeholder="Price"
+              className={classes.Input}
+              name="Price"
+              type="number"
+              onChange={this.changeHandler}
+            />
             Stuff:{" "}
             <Input name="StuffName" type="text" onChange={this.changeHandler} />
           </span>
@@ -126,16 +147,19 @@ class Expense extends PureComponent {
             <Input name="Price" type="number" onChange={this.changeHandler} />
           </span>
           <span>
-            Description:{" "}
             <Input
+              placeholder="Description"
+              className={classes.Input}
               name="Description"
               type="text"
               onChange={this.changeHandler}
             />
           </span>
           <span>
-            Participants:{" "}
+            <InputLabel htmlFor="age-native-simple">Participants</InputLabel>
             <Select
+              placeholder="Participants"
+              className={classes.Select}
               value={this.state.elements.Type}
               name="Type"
               multiple
