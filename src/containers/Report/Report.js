@@ -3,7 +3,7 @@ import "react-persian-calendar-date-picker/lib/DatePicker.css";
 import DatePicker from "react-persian-calendar-date-picker";
 import moment from "jalali-moment";
 import axios from "../../axios-exp";
-import URLGenerator from "../components/URLGenerator/URLGenerator";
+import URLGenerator from "../../components/URLGenerator/URLGenerator";
 import classes from "./Report.module.css";
 
 function Report(props) {
