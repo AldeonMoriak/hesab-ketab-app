@@ -102,11 +102,6 @@ class Expense extends PureComponent {
         onButtonClick(tableRendererState);
       })
       .catch(error => console.log(error));
-
-    // axios
-    //   .post("/api/HouseCost/InsertSell", expense, config)
-    //   .then(response => console.log("response: ", response.data))
-    //   .catch(error => console.log("error:", error));
   };
 
   // to handle the changes made to the fields

@@ -5,6 +5,7 @@ import moment from "jalali-moment";
 import axios from "../../axios-exp";
 import URLGenerator from "../../components/URLGenerator/URLGenerator";
 import classes from "./Report.module.css";
+import TextField from '@material-ui/core/TextField'
 
 function Report(props) {
   const [selectedDayRange, setSelectedDayRange] = useState({
@@ -15,8 +16,6 @@ function Report(props) {
   let convertDateHandler = updatedDateRange => {
     // eslint-disable-next-line
     for (let date in updatedDateRange) {
-      // "1392/6/3"
-      // convertedDate.push(
       updatedDateRange[date] = moment
         .from(
           `${updatedDateRange[date].year}/${updatedDateRange[date].month}/${updatedDateRange[date].day}`,
@@ -25,7 +24,6 @@ function Report(props) {
         )
         .format("YYYY-M-D");
       console.log(updatedDateRange[date]);
-      // );
     }
     return updatedDateRange;
   };
@@ -41,7 +39,6 @@ function Report(props) {
       updatedDateRange = convertDateHandler(updatedDateRange);
       console.log(updatedDateRange);
       const url = URLGenerator(updatedDateRange);
-      // props.onConvertedDate(convertedDate);
       console.log(`api/housecost/GetReport${url}`);
       axios.get(`api/housecost/GetReport${url}`).then(response => {
         console.log(response.data.ObjList[0]);
@@ -61,14 +58,33 @@ function Report(props) {
       });
     } // eslint-disable-next-line
   }, [selectedDayRange]);
+  const renderCustomInput = ({ ref, onFocus, onBlur }) => (
+    <TextField
+      dir='rtl'
+      readOnly
+      ref={ref} // necessary
+      onFocus={onFocus} // necessary
+      isDayRange
+      onBlur={onBlur} // necessary
+      placeholder="انتخاب روزهای گزارش"
+      value={selectedDayRange.from && selectedDayRange.to ? `از ${selectedDayRange.from.year}/${selectedDayRange.from.month}/${selectedDayRange.from.day} تا ${selectedDayRange.to.year}/${selectedDayRange.to.month}/${selectedDayRange.to.day}` : ''}
+      style={{
+        textAlign: 'center',
+        padding: '.1em',
+        color: '#ccc',
+        fontFamily: 'inherit'
+      }}
+      className="my-custom-input-class" // a styling class
+    />
+  )
 
   return (
     <div>
       <DatePicker
         selectedDayRange={selectedDayRange}
         onChange={setSelectedDayRange}
-        inputPlaceholder="انتخاب روزهای نمایش"
         isDayRange
+        renderInput={renderCustomInput}
       />
       <div className={classes.Report}>
         {report.map((key, index) => (
