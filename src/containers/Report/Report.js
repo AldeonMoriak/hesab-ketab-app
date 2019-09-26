@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import TextField from '@material-ui/core/TextField';
 import moment from "jalali-moment";
+import React, { useEffect, useState } from "react";
+import DatePicker from "react-persian-calendar-date-picker";
+import "react-persian-calendar-date-picker/lib/DatePicker.css";
 import axios from "../../axios-exp";
 import URLGenerator from "../../components/URLGenerator/URLGenerator";
 import classes from "./Report.module.css";
-import TextField from '@material-ui/core/TextField'
 
 function Report(props) {
   const [selectedDayRange, setSelectedDayRange] = useState({
@@ -79,7 +79,7 @@ function Report(props) {
   )
 
   return (
-    <div>
+    <div className={classes.Input}>
       <DatePicker
         selectedDayRange={selectedDayRange}
         onChange={setSelectedDayRange}

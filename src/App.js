@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classes from "./App.module.css";
+import "./App.module.css";
 import Expense from "./containers/Expense/Expense";
 import MyTable from "./containers/MyTable/MyTable";
 import Report from "./containers/Report/Report";
