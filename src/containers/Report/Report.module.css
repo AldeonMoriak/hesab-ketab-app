@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Koodak_Bold";
+  src: local("Koodak_Bold"),
+    url(../../assets/fonts/Koodak_Bold.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "IRANSans";
+  src: local("IRANSans"), url(../../assets/fonts/IRANSans.ttf) format("ttf");
+}
+
+.Report {
+  display: flexbox;
+  flex-flow: row;
+  font-family: "B Koodak", "IRANSans", Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Input {
+  font-family: "IRANSans", "Courier New", Courier, monospace;
+}

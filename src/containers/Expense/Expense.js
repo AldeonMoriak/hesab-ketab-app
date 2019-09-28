@@ -1,12 +1,34 @@
-import React, { Component } from "react";
-import classes from "./Expense.module.css";
+import React, { PureComponent } from "react";
+import myClasses from "./Expense.module.css";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 import axios from "../../axios-exp";
+import { withStyles } from "@material-ui/core/styles";
+import URLGenerator from "../../components/URLGenerator/URLGenerator";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
-class Expense extends Component {
+const styles = theme => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  }
+});
+
+class Expense extends PureComponent {
   state = {
     elements: {
       SpenderId: "",
@@ -21,22 +43,9 @@ class Expense extends Component {
   url = "";
   // returning the needed url
   toGet = () => {
-    let url = "?";
     // using typeGenerator version of state
     const updatedState = this.typeGenerator();
-    let updatedStateArr = [];
-    // eslint-disable-next-line
-    for (let element in updatedState) {
-      updatedStateArr.push(element);
-    }
-    // eslint-disable-next-line
-    for (let element in updatedState) {
-      url = url.concat(`${element}=${updatedState[element]}`);
-      if (updatedStateArr.length - 1 !== updatedStateArr.indexOf(element)) {
-        url = url.concat("&");
-      }
-    }
-    this.url = url;
+    this.url = URLGenerator(updatedState);
   };
 
   // returning the updated state where type and spenderId are of int to send to the backend
@@ -88,13 +97,11 @@ class Expense extends Component {
     this.toGet();
     axios
       .get(`/api/HouseCost/InsertSell${this.url}`)
-      .then(response => console.log(response))
+      .then(response => {
+        const { onButtonClick, tableRendererState } = this.props;
+        onButtonClick(tableRendererState);
+      })
       .catch(error => console.log(error));
-
-    // axios
-    //   .post("/api/HouseCost/InsertSell", expense, config)
-    //   .then(response => console.log("response: ", response.data))
-    //   .catch(error => console.log("error:", error));
   };
 
   // to handle the changes made to the fields
@@ -113,56 +120,88 @@ class Expense extends Component {
       </MenuItem>
     ));
 
+    const { classes } = this.props;
     return (
-      <div className={classes.Expense}>
+      <div className={myClasses.Expense}>
         <form name="expense" action="post">
-          Spender:
-          <Select
-            className={classes.Select}
-            value={this.state.elements.SpenderId}
-            name="SpenderId"
-            onChange={this.changeHandler}
-          >
-            {items}
-          </Select>
-          Stuff:{" "}
-          <Input
-            className={classes.Input}
-            name="StuffName"
-            type="text"
-            onChange={this.changeHandler}
-          />
-          Price:{" "}
-          <Input
-            className={classes.Input}
-            name="Price"
-            type="number"
-            onChange={this.changeHandler}
-          />
-          Description:{" "}
-          <Input
-            className={classes.Input}
-            name="Description"
-            type="text"
-            onChange={this.changeHandler}
-          />
-          Participants:{" "}
-          <Select
-            className={classes.Select}
-            value={this.state.elements.Type}
-            name="Type"
-            multiple
-            onChange={this.changeHandler}
-          >
-            {items}
-          </Select>
-          <Button size="small" variant="contained" onClick={this.clickHandler}>
-            ok
-          </Button>
+          <span>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="SpenderId">Spender</InputLabel>
+              <Select
+                inputProps={{
+                  name: "SpenderId",
+                  id: "Spender"
+                }}
+                className={myClasses.Select}
+                name="SpenderId"
+                value={this.state.elements.SpenderId}
+                onChange={this.changeHandler}
+              >
+                {items}
+              </Select>
+            </FormControl>
+          </span>
+          <span>
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Stuff"
+                className={myClasses.Input}
+                name="StuffName"
+                type="text"
+                onChange={this.changeHandler}
+              />
+            </FormControl>
+          </span>
+          <span>
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Price"
+                className={myClasses.Input}
+                name="Price"
+                type="number"
+                onChange={this.changeHandler}
+              />
+            </FormControl>
+          </span>
+          <span>
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Description"
+                className={myClasses.Input}
+                name="Description"
+                type="text"
+                onChange={this.changeHandler}
+              />
+            </FormControl>
+          </span>
+          <span>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="Participants">Participants</InputLabel>
+              <Select
+                placeholder="Participants"
+                className={myClasses.Select}
+                value={this.state.elements.Type}
+                name="Type"
+                multiple
+                onChange={this.changeHandler}
+              >
+                {items}
+              </Select>
+            </FormControl>
+          </span>
+          <span className={myClasses.Button}>
+            <Button
+              size="small"
+              variant="contained"
+              onClick={this.clickHandler}
+            >
+              ok
+            </Button>
+          </span>
         </form>
       </div>
     );
   }
 }
 
-export default Expense;
+export default withStyles(styles)(Expense);
