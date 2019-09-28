@@ -88,7 +88,7 @@ class MyTable extends PureComponent {
   toGetAllSells = () => {
     const fetchedReports = [];
     axios
-      .get("/api/housecost/getallsells")
+      .get("AldeonMoriak/jsonApi/0")
       .then(response => {
         // eslint-disable-next-line
         // change in to of
@@ -176,9 +176,18 @@ class MyTable extends PureComponent {
     return spender;
   };
 
+  cellHolder = () => {
+    const columnNames = this.state.columnNames;
+    return (columnNames.map((key, index) => (
+      <StyledTableCell align="center" key={index}>
+        {key}
+      </StyledTableCell>
+    ))
+    );
+  }
+
   render() {
     const cells = this.state.cells;
-    const columnNames = this.state.columnNames;
     let content = [];
 
     content.push(
@@ -204,11 +213,7 @@ class MyTable extends PureComponent {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {columnNames.map((key, index) => (
-                <StyledTableCell align="center" key={index}>
-                  {key}
-                </StyledTableCell>
-              ))}
+              {this.cellHolder()}
             </TableRow>
           </TableHead>
           <TableBody>{content[0].map(key => key)}</TableBody>

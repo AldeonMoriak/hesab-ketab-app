@@ -1,4 +1,6 @@
+import { createMuiTheme } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { ThemeProvider } from '@material-ui/styles';
 import moment from "jalali-moment";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-persian-calendar-date-picker";
@@ -32,7 +34,7 @@ function Report(props) {
 
   useEffect(() => {
     if (selectedDayRange.from && selectedDayRange.to) {
-      props.onDateChange(selectedDayRange);
+      props.onDateChange(setSelectedDayRange);
       let updatedDateRange = { startTime: null, EndTime: null };
       updatedDateRange.startTime = selectedDayRange.from;
       updatedDateRange.EndTime = selectedDayRange.to;
@@ -64,7 +66,6 @@ function Report(props) {
       readOnly
       ref={ref} // necessary
       onFocus={onFocus} // necessary
-      isDayRange
       onBlur={onBlur} // necessary
       placeholder="انتخاب روزهای گزارش"
       value={selectedDayRange.from && selectedDayRange.to ? `از ${selectedDayRange.from.year}/${selectedDayRange.from.month}/${selectedDayRange.from.day} تا ${selectedDayRange.to.year}/${selectedDayRange.to.month}/${selectedDayRange.to.day}` : ''}
@@ -99,4 +100,29 @@ function Report(props) {
   );
 }
 
-export default Report;
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      "B Koodak",
+      "IRANSans",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(",")
+  }
+});
+
+export default function CustomizedReport(props) {
+  return (
+    <ThemeProvider theme={theme} >
+      <Report onDateChange={props.onDateChange} />
+    </ThemeProvider>
+  )
+}

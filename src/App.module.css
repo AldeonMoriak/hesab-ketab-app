@@ -7,6 +7,20 @@
 /* align-content: center; */
 /* } */
 
+@font-face {
+  font-family: "Koodak_Bold";
+  src: local("Koodak_Bold"), url(./assets/fonts/Koodak_Bold.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "IRANSans";
+  src: local("IRANSans"), url(./assets/fonts/IRANSans.ttf) format("ttf");
+}
+
+* {
+  font-family: "Koodak_Bold", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .Child {
   padding: 2em;
 }
@@ -15,15 +29,6 @@
   float: right;
   clear: both;
   margin-bottom: 1em;
-  font-family: "Koodak_Bold" "IRANSans" "Segoe UI", Tahoma, Geneva, Verdana,
+  font-family: "Koodak_Bold", "IRANSans", "Segoe UI", Tahoma, Geneva, Verdana,
     sans-serif;
-}
-
-@font-face {
-  font-family: "IRANSans";
-  src: local("IRANSans"), url(./assets/fonts/IRANSans.ttf) format("ttf");
-
-  font-family: "Koodak_Bold";
-  src: local("B Koodak Bold_0"),
-    url(./assets/fonts/Koodak_Bold.ttf) format("ttf");
 }
