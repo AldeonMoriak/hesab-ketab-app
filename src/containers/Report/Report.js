@@ -44,13 +44,16 @@ function Report(props) {
       console.log(`api/housecost/GetReport${url}`);
       axios.get(`api/housecost/GetReport${url}`).then(response => {
         console.log(response.data.ObjList[0]);
+        // eslint-disable-next-line
         for (let key in response.data.ObjList[0]) {
           fetchedReports.push({
             ...response.data.ObjList[0][key]
           });
         }
+        // eslint-disable-next-line
         for (let data of fetchedReports) {
           if (Object.keys(data).length > 0) {
+            // eslint-disable-next-line
             for (let key in data) {
               report.push(`${data[key].Name}: ${data[key].Price}`);
             }
