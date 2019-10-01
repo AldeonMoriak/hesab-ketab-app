@@ -14,6 +14,24 @@ function Report(props) {
     from: null,
     to: null
   });
+  const [data, setData] = useState(null);
+
+  const [Ashkan, setAshkan] = useState({
+    Name: 'اشکان دلیری',
+    Price: 0
+  });
+  const [Mehran, setMehran] = useState({
+    Name: 'مهران میرشکاران',
+    Price: 0
+  });
+  const [Amin, setAmin] = useState({
+    Name: 'امین زارع',
+    Price: 0
+  });
+
+  const ashkanHandler = (price) => setAshkan(prevAshkan => {
+    return { ...prevAshkan, Price: prevAshkan.Price + price }
+  });
 
   let convertDateHandler = updatedDateRange => {
     // eslint-disable-next-line
@@ -32,6 +50,10 @@ function Report(props) {
   let fetchedReports = [];
   let report = [];
 
+  // `api/housecost/GetReport${url}`
+  // AldeonMoriak/jsonApi/ObjList
+
+
   useEffect(() => {
     if (selectedDayRange.from && selectedDayRange.to) {
       props.onDateChange(setSelectedDayRange);
@@ -41,24 +63,35 @@ function Report(props) {
       updatedDateRange = convertDateHandler(updatedDateRange);
       console.log(updatedDateRange);
       const url = URLGenerator(updatedDateRange);
-      console.log(`api/housecost/GetReport${url}`);
-      axios.get(`api/housecost/GetReport${url}`).then(response => {
-        console.log(response.data.ObjList[0]);
+      // console.log(`api/housecost/GetReport${url}`);
+      axios.get('AldeonMoriak/jsonApi/ObjList').then(response => {
+        // console.log(response.data[0]);
         // eslint-disable-next-line
-        for (let key in response.data.ObjList[0]) {
-          fetchedReports.push({
-            ...response.data.ObjList[0][key]
-          });
-        }
-        // eslint-disable-next-line
-        for (let data of fetchedReports) {
-          if (Object.keys(data).length > 0) {
-            // eslint-disable-next-line
-            for (let key in data) {
-              report.push(`${data[key].Name}: ${data[key].Price}`);
+        for (let key of response.data) {
+          // console.log(response.data[key].Price);
+          console.log(key);
+          for (let element in key) {
+            for (let el of key[element]) {
+              // console.log(el)
+
+              if (el.Name === Ashkan.Name) {
+
+                ashkanHandler(el.Price);
+                console.log(Ashkan)
+              } else if (element.Name === Mehran.Name) {
+
+              } else {
+
+              }
             }
           }
+          // fetchedReports.push({
+          //   ...response.data[0][key]
+          // });
+
         }
+        console.log(...fetchedReports)
+        // eslint-disable-next-line
         console.log(report);
       });
     } // eslint-disable-next-line
