@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import { ThemeProvider } from "@material-ui/styles";
 import moment from "jalali-moment";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-persian-calendar-date-picker";
@@ -9,6 +9,10 @@ import axios from "../../axios-exp";
 import URLGenerator from "../../components/URLGenerator/URLGenerator";
 import classes from "./Report.module.css";
 
+const INITIAL_ASHKAN = {
+  Name: "اشکان دلیری",
+  Price: 0
+};
 function Report(props) {
   const [selectedDayRange, setSelectedDayRange] = useState({
     from: null,
@@ -16,22 +20,30 @@ function Report(props) {
   });
   const [data, setData] = useState(null);
 
-  const [Ashkan, setAshkan] = useState({
-    Name: 'اشکان دلیری',
-    Price: 0
-  });
+  const [Ashkan, setAshkan] = useState(INITIAL_ASHKAN);
   const [Mehran, setMehran] = useState({
-    Name: 'مهران میرشکاران',
+    Name: "مهران میرشکاران",
     Price: 0
   });
   const [Amin, setAmin] = useState({
-    Name: 'امین زارع',
+    Name: "امین زارع",
     Price: 0
   });
 
-  const ashkanHandler = (price) => setAshkan(prevAshkan => {
-    return { ...prevAshkan, Price: prevAshkan.Price + price }
-  });
+  const ashkanHandler = price => {
+    setAshkan(Ashkan => ({ ...Ashkan, Price: price }));
+    console.log(Ashkan);
+  };
+  const mehranHandler = price => {
+    setAshkan(Mehran => ({ ...Mehran, Price: price }));
+    console.log(Mehran);
+  };
+  const aminHandler = price => {
+    setAshkan(Amin => ({ ...Amin, Price: price }));
+    console.log(Amin);
+  };
+
+  //   });
 
   let convertDateHandler = updatedDateRange => {
     // eslint-disable-next-line
@@ -53,7 +65,6 @@ function Report(props) {
   // `api/housecost/GetReport${url}`
   // AldeonMoriak/jsonApi/ObjList
 
-
   useEffect(() => {
     if (selectedDayRange.from && selectedDayRange.to) {
       props.onDateChange(setSelectedDayRange);
@@ -64,7 +75,7 @@ function Report(props) {
       console.log(updatedDateRange);
       const url = URLGenerator(updatedDateRange);
       // console.log(`api/housecost/GetReport${url}`);
-      axios.get('AldeonMoriak/jsonApi/ObjList').then(response => {
+      axios.get("AldeonMoriak/jsonApi/ObjList").then(response => {
         // console.log(response.data[0]);
         // eslint-disable-next-line
         for (let key of response.data) {
@@ -75,22 +86,19 @@ function Report(props) {
               // console.log(el)
 
               if (el.Name === Ashkan.Name) {
-
                 ashkanHandler(el.Price);
-                console.log(Ashkan)
-              } else if (element.Name === Mehran.Name) {
-
+              } else if (el.Name === Mehran.Name) {
+                mehranHandler(el.Price);
               } else {
-
+                aminHandler(el.Price);
               }
             }
           }
           // fetchedReports.push({
           //   ...response.data[0][key]
           // });
-
         }
-        console.log(...fetchedReports)
+        console.log(...fetchedReports);
         // eslint-disable-next-line
         console.log(report);
       });
@@ -98,22 +106,26 @@ function Report(props) {
   }, [selectedDayRange]);
   const renderCustomInput = ({ ref, onFocus, onBlur }) => (
     <TextField
-      dir='rtl'
+      dir="rtl"
       readOnly
       ref={ref} // necessary
       onFocus={onFocus} // necessary
       onBlur={onBlur} // necessary
       placeholder="انتخاب روزهای گزارش"
-      value={selectedDayRange.from && selectedDayRange.to ? `از ${selectedDayRange.from.year}/${selectedDayRange.from.month}/${selectedDayRange.from.day} تا ${selectedDayRange.to.year}/${selectedDayRange.to.month}/${selectedDayRange.to.day}` : ''}
+      value={
+        selectedDayRange.from && selectedDayRange.to
+          ? `از ${selectedDayRange.from.year}/${selectedDayRange.from.month}/${selectedDayRange.from.day} تا ${selectedDayRange.to.year}/${selectedDayRange.to.month}/${selectedDayRange.to.day}`
+          : ""
+      }
       style={{
-        textAlign: 'center',
-        padding: '.1em',
-        color: '#ccc',
-        fontFamily: 'inherit'
+        textAlign: "center",
+        padding: ".1em",
+        color: "#ccc",
+        fontFamily: "inherit"
       }}
       className="my-custom-input-class" // a styling class
     />
-  )
+  );
 
   return (
     <div className={classes.Input}>
@@ -157,8 +169,8 @@ const theme = createMuiTheme({
 
 export default function CustomizedReport(props) {
   return (
-    <ThemeProvider theme={theme} >
+    <ThemeProvider theme={theme}>
       <Report onDateChange={props.onDateChange} />
     </ThemeProvider>
-  )
+  );
 }
