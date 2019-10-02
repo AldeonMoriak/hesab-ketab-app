@@ -26,6 +26,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const INITIAL_ASHKAN = {
+  Name: "اشکان دلیری",
+  Price: 0
+};
 function Report(props) {
   const [selectedDayRange, setSelectedDayRange] = useState({
     from: null,
@@ -33,22 +37,30 @@ function Report(props) {
   });
   const [show, setShow] = useState(false);
 
-  const [Ashkan, setAshkan] = useState({
-    Name: 'اشکان دلیری',
-    Price: 0
-  });
+  const [Ashkan, setAshkan] = useState(INITIAL_ASHKAN);
   const [Mehran, setMehran] = useState({
-    Name: 'مهران میرشکاران',
+    Name: "مهران میرشکاران",
     Price: 0
   });
   const [Amin, setAmin] = useState({
-    Name: 'امین زارع',
+    Name: "امین زارع",
     Price: 0
   });
 
-  const ashkanHandler = (price) => setAshkan(prevAshkan => {
-    return { ...prevAshkan, Price: prevAshkan.Price + price }
-  });
+  const ashkanHandler = price => {
+    setAshkan(Ashkan => ({ ...Ashkan, Price: price }));
+    console.log(Ashkan);
+  };
+  const mehranHandler = price => {
+    setAshkan(Mehran => ({ ...Mehran, Price: price }));
+    console.log(Mehran);
+  };
+  const aminHandler = price => {
+    setAshkan(Amin => ({ ...Amin, Price: price }));
+    console.log(Amin);
+  };
+
+  //   });
 
   const mehranHandler = price => {
     setMehran(Mehran => ({ ...Mehran, Price: Mehran.Price + price }));
@@ -85,7 +97,6 @@ function Report(props) {
   // `api/housecost/GetReport${url}`
   // AldeonMoriak/jsonApi/ObjList
 
-
   useEffect(() => {
     if (selectedDayRange.from && selectedDayRange.to) {
       setShow(false);
@@ -98,7 +109,7 @@ function Report(props) {
       console.log(updatedDateRange);
       const url = URLGenerator(updatedDateRange);
       // console.log(`api/housecost/GetReport${url}`);
-      axios.get('AldeonMoriak/jsonApi/ObjList').then(response => {
+      axios.get("AldeonMoriak/jsonApi/ObjList").then(response => {
         // console.log(response.data[0]);
         // eslint-disable-next-line
         for (let key of response.data) {
@@ -133,18 +144,22 @@ function Report(props) {
 
   const renderCustomInput = ({ ref, onFocus, onBlur }) => (
     <TextField
-      dir='rtl'
+      dir="rtl"
       readOnly
       ref={ref} // necessary
       onFocus={onFocus} // necessary
       onBlur={onBlur} // necessary
       placeholder="انتخاب روزهای گزارش"
-      value={selectedDayRange.from && selectedDayRange.to ? `از ${selectedDayRange.from.year}/${selectedDayRange.from.month}/${selectedDayRange.from.day} تا ${selectedDayRange.to.year}/${selectedDayRange.to.month}/${selectedDayRange.to.day}` : ''}
+      value={
+        selectedDayRange.from && selectedDayRange.to
+          ? `از ${selectedDayRange.from.year}/${selectedDayRange.from.month}/${selectedDayRange.from.day} تا ${selectedDayRange.to.year}/${selectedDayRange.to.month}/${selectedDayRange.to.day}`
+          : ""
+      }
       style={{
-        textAlign: 'center',
-        padding: '.1em',
-        color: '#ccc',
-        fontFamily: 'inherit'
+        textAlign: "center",
+        padding: ".1em",
+        color: "#ccc",
+        fontFamily: "inherit"
       }}
     />
   );
@@ -210,8 +225,8 @@ const theme = createMuiTheme({
 
 export default function CustomizedReport(props) {
   return (
-    <ThemeProvider theme={theme} >
+    <ThemeProvider theme={theme}>
       <Report onDateChange={props.onDateChange} />
     </ThemeProvider>
-  )
+  );
 }

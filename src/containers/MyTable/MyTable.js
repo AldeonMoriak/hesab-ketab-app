@@ -119,7 +119,6 @@ const MyTable = props => {
         fetchedReports.forEach((report, index) => {
           fetchedReports[index].Type = switchHandler(report.Type);
           fetchedReports[index].SpenderId = spenderIdHandler(report.SpenderId);
-
         });
         reportsHandler(fetchedReports);
         cellMaker();
@@ -166,7 +165,7 @@ const MyTable = props => {
 
   const cellHolder = () => {
     const columnNamesHook = [...columnNames];
-    console.log(columnNamesHook)
+    console.log(columnNamesHook);
     return columnNamesHook.map((key, index) => (
       <StyledTableCell align="center" key={index}>
         {key}
