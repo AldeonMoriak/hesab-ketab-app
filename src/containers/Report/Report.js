@@ -1,6 +1,7 @@
 import { createMuiTheme, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { ThemeProvider } from '@material-ui/styles';
 import moment from "jalali-moment";
@@ -9,8 +10,6 @@ import DatePicker from "react-persian-calendar-date-picker";
 import "react-persian-calendar-date-picker/lib/DatePicker.css";
 import axios from "../../axios-exp";
 import URLGenerator from "../../components/URLGenerator/URLGenerator";
-import classes from "./Report.module.css";
-import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,19 +47,10 @@ function Report(props) {
   });
 
   const ashkanHandler = price => {
-    setAshkan(Ashkan => ({ ...Ashkan, Price: price }));
+    setAshkan(Ashkan => ({ ...Ashkan, Price: Ashkan.Price + price }));
     console.log(Ashkan);
   };
-  const mehranHandler = price => {
-    setAshkan(Mehran => ({ ...Mehran, Price: price }));
-    console.log(Mehran);
-  };
-  const aminHandler = price => {
-    setAshkan(Amin => ({ ...Amin, Price: price }));
-    console.log(Amin);
-  };
 
-  //   });
 
   const mehranHandler = price => {
     setMehran(Mehran => ({ ...Mehran, Price: Mehran.Price + price }));
@@ -91,8 +81,6 @@ function Report(props) {
     }
     return updatedDateRange;
   };
-  let fetchedReports = [];
-  let report = [];
 
   // `api/housecost/GetReport${url}`
   // AldeonMoriak/jsonApi/ObjList
@@ -199,7 +187,6 @@ function Report(props) {
       <Grid container>
         {showHandler()}
       </Grid>
-      {/* // </Grid> */}
     </div>
   );
 }
