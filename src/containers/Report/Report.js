@@ -1,4 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { ThemeProvider } from '@material-ui/styles';
 import moment from "jalali-moment";
@@ -8,13 +10,28 @@ import "react-persian-calendar-date-picker/lib/DatePicker.css";
 import axios from "../../axios-exp";
 import URLGenerator from "../../components/URLGenerator/URLGenerator";
 import classes from "./Report.module.css";
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  grid: {
+    margin: '1em'
+  }
+}));
 
 function Report(props) {
   const [selectedDayRange, setSelectedDayRange] = useState({
     from: null,
     to: null
   });
-  const [data, setData] = useState(null);
+  const [show, setShow] = useState(false);
 
   const [Ashkan, setAshkan] = useState({
     Name: 'اشکان دلیری',
@@ -32,6 +49,21 @@ function Report(props) {
   const ashkanHandler = (price) => setAshkan(prevAshkan => {
     return { ...prevAshkan, Price: prevAshkan.Price + price }
   });
+
+  const mehranHandler = price => {
+    setMehran(Mehran => ({ ...Mehran, Price: Mehran.Price + price }));
+    console.log(Mehran);
+  };
+  const aminHandler = price => {
+    setAmin(Amin => ({ ...Amin, Price: Amin.Price + price }));
+    console.log(Amin);
+  };
+
+  const stateResetHandler = () => {
+    setAshkan(Ashkan => ({ ...Ashkan, Price: 0 }));
+    setMehran(Mehran => ({ ...Mehran, Price: 0 }));
+    setAmin(Amin => ({ ...Amin, Price: 0 }));
+  };
 
   let convertDateHandler = updatedDateRange => {
     // eslint-disable-next-line
@@ -56,6 +88,8 @@ function Report(props) {
 
   useEffect(() => {
     if (selectedDayRange.from && selectedDayRange.to) {
+      setShow(false);
+      stateResetHandler();
       props.onDateChange(setSelectedDayRange);
       let updatedDateRange = { startTime: null, EndTime: null };
       updatedDateRange.startTime = selectedDayRange.from;
@@ -73,29 +107,30 @@ function Report(props) {
           for (let element in key) {
             for (let el of key[element]) {
               // console.log(el)
-
-              if (el.Name === Ashkan.Name) {
-
-                ashkanHandler(el.Price);
-                console.log(Ashkan)
-              } else if (element.Name === Mehran.Name) {
-
-              } else {
-
+              switch (el.Name) {
+                case Ashkan.Name:
+                  ashkanHandler(el.Price);
+                  break;
+                case Mehran.Name:
+                  mehranHandler(el.Price);
+                  break;
+                case Amin.Name:
+                  aminHandler(el.Price);
+                  console.log(el.Price);
+                  break;
+                default:
+                  console.log("error");
               }
             }
           }
-          // fetchedReports.push({
-          //   ...response.data[0][key]
-          // });
-
         }
-        console.log(...fetchedReports)
-        // eslint-disable-next-line
-        console.log(report);
+        setShow(true);
       });
     } // eslint-disable-next-line
   }, [selectedDayRange]);
+
+  const classes = useStyles();
+
   const renderCustomInput = ({ ref, onFocus, onBlur }) => (
     <TextField
       dir='rtl'
@@ -111,27 +146,45 @@ function Report(props) {
         color: '#ccc',
         fontFamily: 'inherit'
       }}
-      className="my-custom-input-class" // a styling class
     />
-  )
+  );
+
+  const showHandler = () => {
+    return show ? (
+      <Grid container direction='row' justify='center' alignItems='center' spacing={3} className={classes.root}>
+        <Grid item xs={12}>
+          <Grid spacing={3} container >
+            <Grid item>
+              <Paper className={classes.paper}> <Typography variant='h5' component='h2'>{Ashkan.Name}</Typography><Typography component='h2'>{`${Ashkan.Price} تومن`}</Typography></Paper></Grid>
+            <Grid item>
+              <Paper className={classes.paper}><Typography variant='h5' component='h2'>{Mehran.Name}</Typography><Typography component='h2'>{`${Mehran.Price} تومن`}</Typography></Paper></Grid>
+            <Grid item>
+              <Paper className={classes.paper}><Typography variant='h5' component='h2'>{Amin.Name}</Typography><Typography component='h2'>{`${Amin.Price} تومن`}</Typography></Paper>
+            </Grid>
+          </Grid >
+        </Grid>
+      </Grid>
+    ) : null;
+  }
 
   return (
-    <div className={classes.Input}>
-      <DatePicker
-        selectedDayRange={selectedDayRange}
-        onChange={setSelectedDayRange}
-        isDayRange
-        renderInput={renderCustomInput}
-      />
-      <div className={classes.Report}>
-        {report.map((key, index) => (
-          <div>
-            <p key={index}>
-              {index}: {key}
-            </p>
-          </div>
-        ))}
-      </div>
+    <div>
+      <Grid container>
+        <Grid container direction='row' justify='flex-end' alignItems='center' spacing={2} className={classes.grid}>
+          <Grid item >
+            <DatePicker
+              selectedDayRange={selectedDayRange}
+              onChange={setSelectedDayRange}
+              isDayRange
+              renderInput={renderCustomInput}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid container>
+        {showHandler()}
+      </Grid>
+      {/* // </Grid> */}
     </div>
   );
 }
