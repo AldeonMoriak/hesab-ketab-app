@@ -92,11 +92,12 @@ class Expense extends PureComponent {
     return updatedState;
   };
 
+  // `/api/HouseCost/InsertSell${this.url}`
   // sending the url to the server
   clickHandler = () => {
     this.toGet();
     axios
-      .get(`/api/HouseCost/InsertSell${this.url}`)
+      .get("AldeonMoriak/jsonApi/ObjList")
       .then(response => {
         const { onButtonClick, tableRendererState } = this.props;
         onButtonClick(tableRendererState);

@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-persian-calendar-date-picker";
 import "react-persian-calendar-date-picker/lib/DatePicker.css";
 import axios from "../../axios-exp";
-import URLGenerator from "../../components/URLGenerator/URLGenerator";
+// import URLGenerator from "../../components/URLGenerator/URLGenerator";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -95,7 +95,7 @@ function Report(props) {
       updatedDateRange.EndTime = selectedDayRange.to;
       updatedDateRange = convertDateHandler(updatedDateRange);
       console.log(updatedDateRange);
-      const url = URLGenerator(updatedDateRange);
+      // const url = URLGenerator(updatedDateRange);
       // console.log(`api/housecost/GetReport${url}`);
       axios.get("AldeonMoriak/jsonApi/ObjList").then(response => {
         // console.log(response.data[0]);
@@ -103,7 +103,9 @@ function Report(props) {
         for (let key of response.data) {
           // console.log(response.data[key].Price);
           console.log(key);
+          // eslint-disable-next-line
           for (let element in key) {
+            // eslint-disable-next-line
             for (let el of key[element]) {
               // console.log(el)
               switch (el.Name) {

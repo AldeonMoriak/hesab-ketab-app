@@ -93,8 +93,10 @@ const MyTable = props => {
   const [cells, setCells] = useState([]);
   const [columnNames, setColumnNames] = useState([]);
 
+  console.log(reports)
   const reportsHandler = data => {
-    setReports(reports => reports.push(...data));
+    setReports(reports => [...data]);
+    console.log(reports)
   };
 
   // AldeonMoriak/jsonApi/0
@@ -105,18 +107,23 @@ const MyTable = props => {
     axios
       .get("AldeonMoriak/jsonApi/0")
       .then(response => {
+        console.log(reports)
         // eslint-disable-next-line
         // change in to of
         // eslint-disable-next-line
-        for (let key in response.data) {
+        let id = 0
+        const idGenerator = () => { id = id + 1; return id; }
+        for (let key of response.data) {
+          // console.log(key)
           fetchedReports.push({
-            No: +key + 1,
-            ...response.data[key]
+            No: idGenerator(),
+            ...key
           });
         }
         // eslint-disable-next-line
 
         fetchedReports.forEach((report, index) => {
+          console.log(reports)
           fetchedReports[index].Type = switchHandler(report.Type);
           fetchedReports[index].SpenderId = spenderIdHandler(report.SpenderId);
         });
@@ -130,19 +137,26 @@ const MyTable = props => {
 
   useEffect(() => {
     toGetAllSells();
+    console.log(reports)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.myTableRenderer]);
   // , [props.myTableRenderer]
   const cellMaker = () => {
+    console.log(reports)
     const columnName = [];
-    const reportsHook = reports;
     let cellsHook = [];
+    const reportsHook = reports;
     // eslint-disable-next-line
-    for (let key in reportsHook[0]) {
-      columnName.push(key);
+    // for (let key of reportsHook) {
+    for (let el in reportsHook[0]) {
+      console.log(el);
+      columnName.push(el);
     }
+    // }
+    console.log(columnName)
     // eslint-disable-next-line
     for (let key of reportsHook) {
+      console.log(key)
       let elements = [];
       // eslint-disable-next-line
       for (let element in key) {
@@ -159,13 +173,16 @@ const MyTable = props => {
       cellsHook.push(elements);
     }
 
-    setCells(cellsHook);
+    setCells(cells => [...cellsHook]);
+    console.log(columnName)
     setColumnNames(columnName);
   };
 
   const cellHolder = () => {
+    console.log(reports)
     const columnNamesHook = [...columnNames];
-    console.log(columnNamesHook);
+    console.log(columnNamesHook)
+    // console.log(columnNamesHook);
     return columnNamesHook.map((key, index) => (
       <StyledTableCell align="center" key={index}>
         {key}
@@ -174,7 +191,9 @@ const MyTable = props => {
   };
 
   const cellsHooks = cells;
+  // console.log(cells)
   let content = [];
+  // console.log(reports)
 
   content.push(
     cellsHooks.map((key, indexRow) => (
@@ -194,6 +213,7 @@ const MyTable = props => {
   );
 
   const classes = useStyles();
+  // console.log(reports)
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -228,7 +248,7 @@ const theme = createMuiTheme({
 export default function CustomizedTable(props) {
   return (
     <ThemeProvider theme={theme}>
-      <MyTable myTableRenderer={props.myTableRen} />
+      <MyTable myTableRenderer={props.myTableRenderer} />
     </ThemeProvider>
   );
 }
