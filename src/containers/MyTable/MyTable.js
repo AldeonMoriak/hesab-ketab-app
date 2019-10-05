@@ -96,6 +96,7 @@ const MyTable = props => {
   console.log(reports)
   const reportsHandler = data => {
     setReports(reports => [...data]);
+
     console.log(reports)
   };
 
@@ -103,37 +104,68 @@ const MyTable = props => {
   // /api/housecost/getallsells
 
   const fetchedReports = [];
-  const toGetAllSells = () => {
-    axios
-      .get("AldeonMoriak/jsonApi/0")
-      .then(response => {
-        console.log(reports)
-        // eslint-disable-next-line
-        // change in to of
-        // eslint-disable-next-line
-        let id = 0
-        const idGenerator = () => { id = id + 1; return id; }
-        for (let key of response.data) {
-          // console.log(key)
-          fetchedReports.push({
-            No: idGenerator(),
-            ...key
-          });
-        }
-        // eslint-disable-next-line
+  const toGetAllSells = async () => {
+    const response = await axios("AldeonMoriak/jsonApi/0");
+    console.log(response.data);
 
-        fetchedReports.forEach((report, index) => {
-          console.log(reports)
-          fetchedReports[index].Type = switchHandler(report.Type);
-          fetchedReports[index].SpenderId = spenderIdHandler(report.SpenderId);
-        });
-        reportsHandler(fetchedReports);
-        cellMaker();
-      })
-      .catch(error => {
-        console.log(`Error message2: ${error.message}`);
+    console.log(reports)
+    // eslint-disable-next-line
+    // change in to of
+    // eslint-disable-next-line
+    let id = 0
+    const idGenerator = () => { id = id + 1; return id; }
+    for (let key of response.data) {
+      console.log(key)
+      fetchedReports.push({
+        No: idGenerator(),
+        ...key
       });
-  };
+    }
+    // eslint-disable-next-line
+
+    fetchedReports.forEach((report, index) => {
+      console.log(reports)
+      fetchedReports[index].Type = switchHandler(report.Type);
+      fetchedReports[index].SpenderId = spenderIdHandler(report.SpenderId);
+    });
+    reportsHandler(fetchedReports);
+    const cellMaker = () => {
+      console.log(reports)
+      const columnName = [];
+      let cellsHook = [];
+      const reportsHook = [...reports];
+      // eslint-disable-next-line
+      // for (let key of reportsHook) {
+      for (let el in reportsHook[0]) {
+        console.log(el);
+        columnName.push(el);
+      }
+      // }
+      console.log(columnName)
+      // eslint-disable-next-line
+      for (let key of reportsHook) {
+        console.log(key)
+        let elements = [];
+        // eslint-disable-next-line
+        for (let element in key) {
+          if (element === "CreateDateTime") {
+            elements.push(
+              moment(`${key[element]}`, "DD-MM-YYYY")
+                .locale("fa")
+                .format("YYYY/M/D")
+            );
+          } else {
+            elements.push(key[element]);
+          }
+        }
+        cellsHook.push(elements);
+      }
+      setCells(cells => [...cellsHook]);
+      setColumnNames(columnNames => [...columnName]);
+      console.log(columnNames)
+    };
+    cellMaker();
+  }
 
   useEffect(() => {
     toGetAllSells();
@@ -141,45 +173,12 @@ const MyTable = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.myTableRenderer]);
   // , [props.myTableRenderer]
-  const cellMaker = () => {
-    console.log(reports)
-    const columnName = [];
-    let cellsHook = [];
-    const reportsHook = reports;
-    // eslint-disable-next-line
-    // for (let key of reportsHook) {
-    for (let el in reportsHook[0]) {
-      console.log(el);
-      columnName.push(el);
-    }
-    // }
-    console.log(columnName)
-    // eslint-disable-next-line
-    for (let key of reportsHook) {
-      console.log(key)
-      let elements = [];
-      // eslint-disable-next-line
-      for (let element in key) {
-        if (element === "CreateDateTime") {
-          elements.push(
-            moment(`${key[element]}`, "DD-MM-YYYY")
-              .locale("fa")
-              .format("YYYY/M/D")
-          );
-        } else {
-          elements.push(key[element]);
-        }
-      }
-      cellsHook.push(elements);
-    }
 
-    setCells(cells => [...cellsHook]);
-    console.log(columnName)
-    setColumnNames(columnName);
-  };
 
   const cellHolder = () => {
-    console.log(reports)
+    // props.tableHandler(props.myTableRenderer);
+
+    console.log(columnNames);
     const columnNamesHook = [...columnNames];
     console.log(columnNamesHook)
     // console.log(columnNamesHook);
@@ -190,7 +189,7 @@ const MyTable = props => {
     ));
   };
 
-  const cellsHooks = cells;
+  const cellsHooks = [...cells];
   // console.log(cells)
   let content = [];
   // console.log(reports)
@@ -248,7 +247,7 @@ const theme = createMuiTheme({
 export default function CustomizedTable(props) {
   return (
     <ThemeProvider theme={theme}>
-      <MyTable myTableRenderer={props.myTableRenderer} />
+      <MyTable tableHandler={props.tableHandler} myTableRenderer={props.myTableRenderer} />
     </ThemeProvider>
   );
 }

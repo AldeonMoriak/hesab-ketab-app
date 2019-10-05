@@ -50,7 +50,7 @@ class App extends Component {
         </div>
         {console.log(this.state.convertedDate)}
         {/* <SignIn /> */}
-        <MyTable myTableRenderer={this.state.myTableRenderer} />
+        <MyTable myTableRenderer={this.state.myTableRenderer} tableHandler={this.handleTableRender} />
       </div>
     );
   }
