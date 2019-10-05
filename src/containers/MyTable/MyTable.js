@@ -103,7 +103,7 @@ const MyTable = props => {
   const fetchedReports = [];
   const toGetAllSells = () => {
     axios
-      .get("AldeonMoriak/jsonApi/0")
+      .get("/api/housecost/getallsells")
       .then(response => {
         // eslint-disable-next-line
         // change in to of

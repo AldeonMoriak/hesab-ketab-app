@@ -1,9 +1,9 @@
-import { createMuiTheme, Typography } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme, Typography } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import { ThemeProvider } from "@material-ui/styles";
 import moment from "jalali-moment";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-persian-calendar-date-picker";
@@ -13,15 +13,15 @@ import URLGenerator from "../../components/URLGenerator/URLGenerator";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+    textAlign: "center",
+    color: theme.palette.text.secondary
   },
   grid: {
-    margin: '1em'
+    margin: "1em"
   }
 }));
 
@@ -50,7 +50,6 @@ function Report(props) {
     setAshkan(Ashkan => ({ ...Ashkan, Price: Ashkan.Price + price }));
     console.log(Ashkan);
   };
-
 
   const mehranHandler = price => {
     setMehran(Mehran => ({ ...Mehran, Price: Mehran.Price + price }));
@@ -97,10 +96,10 @@ function Report(props) {
       console.log(updatedDateRange);
       const url = URLGenerator(updatedDateRange);
       // console.log(`api/housecost/GetReport${url}`);
-      axios.get("AldeonMoriak/jsonApi/ObjList").then(response => {
+      axios.get(`api/housecost/GetReport${url}`).then(response => {
         // console.log(response.data[0]);
         // eslint-disable-next-line
-        for (let key of response.data) {
+        for (let key of response.data.ObjList) {
           // console.log(response.data[key].Price);
           console.log(key);
           for (let element in key) {
@@ -154,27 +153,59 @@ function Report(props) {
 
   const showHandler = () => {
     return show ? (
-      <Grid container direction='row' justify='center' alignItems='center' spacing={3} className={classes.root}>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={3}
+        className={classes.root}
+      >
         <Grid item xs={12}>
-          <Grid spacing={3} container >
+          <Grid spacing={3} container>
             <Grid item>
-              <Paper className={classes.paper}> <Typography variant='h5' component='h2'>{Ashkan.Name}</Typography><Typography component='h2'>{`${Ashkan.Price} تومن`}</Typography></Paper></Grid>
-            <Grid item>
-              <Paper className={classes.paper}><Typography variant='h5' component='h2'>{Mehran.Name}</Typography><Typography component='h2'>{`${Mehran.Price} تومن`}</Typography></Paper></Grid>
-            <Grid item>
-              <Paper className={classes.paper}><Typography variant='h5' component='h2'>{Amin.Name}</Typography><Typography component='h2'>{`${Amin.Price} تومن`}</Typography></Paper>
+              <Paper className={classes.paper}>
+                {" "}
+                <Typography variant="h5" component="h2">
+                  {Ashkan.Name}
+                </Typography>
+                <Typography component="h2">{`${Ashkan.Price} تومن`}</Typography>
+              </Paper>
             </Grid>
-          </Grid >
+            <Grid item>
+              <Paper className={classes.paper}>
+                <Typography variant="h5" component="h2">
+                  {Mehran.Name}
+                </Typography>
+                <Typography component="h2">{`${Mehran.Price} تومن`}</Typography>
+              </Paper>
+            </Grid>
+            <Grid item>
+              <Paper className={classes.paper}>
+                <Typography variant="h5" component="h2">
+                  {Amin.Name}
+                </Typography>
+                <Typography component="h2">{`${Amin.Price} تومن`}</Typography>
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     ) : null;
-  }
+  };
 
   return (
     <div>
       <Grid container>
-        <Grid container direction='row' justify='flex-end' alignItems='center' spacing={2} className={classes.grid}>
-          <Grid item >
+        <Grid
+          container
+          direction="row"
+          justify="flex-end"
+          alignItems="center"
+          spacing={2}
+          className={classes.grid}
+        >
+          <Grid item>
             <DatePicker
               selectedDayRange={selectedDayRange}
               onChange={setSelectedDayRange}
@@ -184,9 +215,7 @@ function Report(props) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container>
-        {showHandler()}
-      </Grid>
+      <Grid container>{showHandler()}</Grid>
     </div>
   );
 }
