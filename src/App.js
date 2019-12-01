@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import classes from "./App.module.css";
-import "./App.module.css";
-import Expense from "./containers/Expense/Expense";
-import MyTable from "./containers/MyTable/MyTable";
-import Report from "./containers/Report/Report";
+import React, { Component } from "react"
+import classes from "./App.module.css"
+import "./App.module.css"
+import Expense from "./containers/Expense/Expense"
+import MyTable from "./containers/MyTable/MyTable"
+import Report from "./containers/Report/Report"
+import Archive from "./components/Archive"
 
 class App extends Component {
   state = {
@@ -14,23 +15,23 @@ class App extends Component {
       to: null
     },
     convertedDate: ""
-  };
+  }
 
   handleTableRender = myTableRenderer => {
-    this.setState({ myTableRenderer: !myTableRenderer });
-  };
+    this.setState({ myTableRenderer: !myTableRenderer })
+  }
 
   handleNumberChange = numOfOrders => {
-    this.setState({ numOfOrders });
-  };
+    this.setState({ numOfOrders })
+  }
 
   dateHandler = date => {
-    this.setState({ date });
-  };
+    this.setState({ date })
+  }
 
   convertDateHandler = convertedDate => {
-    this.setState({ convertedDate });
-  };
+    this.setState({ convertedDate })
+  }
 
   render() {
     // const date = this.state.date
@@ -47,13 +48,16 @@ class App extends Component {
             onConvertedDate={this.convertDateHandler}
             onDateChange={this.dateHandler}
           />
+          <div>
+            <Archive />
+          </div>
         </div>
         {console.log(this.state.convertedDate)}
         {/* <SignIn /> */}
         <MyTable myTableRenderer={this.state.myTableRenderer} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
